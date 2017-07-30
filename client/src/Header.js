@@ -14,6 +14,9 @@ class App extends React.Component {
             <li>
               <Link to="/form">form</Link>
             </li>
+            <li>
+              <Link to="/TodoList">TodoList</Link>
+            </li>
           </ul>
     );
   }
