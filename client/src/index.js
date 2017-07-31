@@ -5,23 +5,22 @@ import createBrowserHistory from 'history/createBrowserHistory';
 import {Provider} from 'mobx-react';
 import {RouterStore, syncHistoryWithStore} from 'mobx-react-router';
 import Routes from './Routes';
-import TodoStore from './TodoStore';
-import TodoList from './TodoList';
+import stores from './stores';
 
 const browserHistory = createBrowserHistory();
 const routingStore = new RouterStore();
 
-const stores = {
+const Providerstores = {
     // Key can be whatever you want
     routing: routingStore,
-    todostore:TodoStore,
+    todostore:stores.todostore,
     // ...other stores
 };
 
 const history = syncHistoryWithStore(browserHistory, routingStore);
 
 ReactDOM.render(
-<Provider {...stores}>
+<Provider {...Providerstores}>
     <Router history={history}>
         <Routes/>
     </Router>

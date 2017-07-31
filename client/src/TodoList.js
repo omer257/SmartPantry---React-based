@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { inject, observer } from 'mobx-react';
 
 @inject('todostore')
@@ -20,8 +22,8 @@ export default class TodoList extends React.Component {
     filter(e){
         this.props.todostore.filter=e.target.value;
     }
-    render() {
-        const { filter,todos,filteredToDos,clearCompleted } = this.props.todostore;
+    render() { 
+        const { filter,filteredToDos,clearCompleted } = this.props.todostore;
         let TodoList= filteredToDos.map((todoItem,index)=>{
            return <li key={index}>
                {todoItem.value}
@@ -36,11 +38,14 @@ export default class TodoList extends React.Component {
             <div>
                 <h1>Todo</h1>
                 <div>{filter}</div>
-                <input className="create" type="text" onKeyPress={this.createTodo.bind(this)}/>
-                <input className="filter" type="text" value={filter} onChange={this.filter.bind(this)}/>
-                <ul>{TodoList}</ul>
+                <label htmlFor="create">Add<input id="create" className="create" type="text" onKeyPress={this.createTodo.bind(this)}/></label>
+                <label htmlFor="filter">Search<input id="filter" className="filter" type="text" value={filter} onChange={this.filter.bind(this)}/></label><ul>{TodoList}</ul>
                 <div onClick={clearCompleted}>Show completed</div>
             </div>
         );
     }
 }
+
+TodoList.propTypes = {
+//   todostore: PropTypes.func.isRequired,
+};

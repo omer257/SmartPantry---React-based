@@ -1,14 +1,17 @@
-.App {
+body{
   text-align: center;
   font-family: "Courier New", monospace;
-  width: 100%;
 }
 
 h1 {
   font-weight: normal;
   font-size: 42px;
 }
-
+.container{width: 820px;margin: auto;border: 1px inset gray;padding: 20px;}
+ul,li{display: inline-block;text-align: left;}
+label{padding-left: 3px;}
+label:nth-of-type(2){padding-left: 20px;}
+li{padding: 7px;}
 .passwords {
   list-style: none;
   padding: 0;
