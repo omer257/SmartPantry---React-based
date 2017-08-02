@@ -9,7 +9,10 @@
     "react-dom": "^15.6.1",
     "react-router": "^4.1.2",
     "react-scripts": "1.0.10",
-    "unirest": "^0.5.1"
+    "mobx": "^3.2.2",
+    "mobx-react": "^4.2.2",
+    "mobx-react-router": "^4.0.1",
+    "prop-types": "^15.5.10"
   },
   "scripts": {
     "sass": "sass --watch src/styles/scss:src/styles/css",

@@ -6,14 +6,8 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
-    "mobx": "^3.2.2",
-    "mobx-react": "^4.2.2",
-    "mobx-react-router": "^4.0.1",
+    "express-fileupload": "^0.1.4",
     "password-generator": "^2.1.0",
-    "prop-types": "^15.5.10",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
-    "react-router-dom": "^4.1.2",
     "unirest": "^0.5.1",
     "watson-developer-cloud": "^2.37.0"
   },

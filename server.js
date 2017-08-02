@@ -5,6 +5,7 @@ var watson = require('watson-developer-cloud');
 var fs = require('fs');
 var unirest = require('unirest');
 var bodyParser = require('body-parser');
+const fileUpload = require('express-fileupload');
 
 const app = express();
 
@@ -12,9 +13,25 @@ const app = express();
 // use bodyParser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(fileUpload());
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
+
+app.post('/upload', function(req, res) {
+  if (!req.files)
+    return res.status(400).send('No files were uploaded.');
+ 
+  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file 
+  let sampleFile = req.files.sampleFile;
+ 
+  // Use the mv() method to place the file somewhere on your server 
+  sampleFile.mv('/somewhere/on/your/server/filename.jpg', function(err) {
+    if (err)
+      return res.status(500).send(err);
+ 
+    res.send('File uploaded!');
+  });
+});
 
 // Put all API endpoints under '/api'
 app.get('/api/passwords', (req, res) => {

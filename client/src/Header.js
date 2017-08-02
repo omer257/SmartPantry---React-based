@@ -23,6 +23,9 @@ class App extends React.Component {
             <li>
               <Link to="/food">food</Link>
             </li>
+            <li>
+              <Link to="/AddItem">AddItem</Link>
+            </li>
           </ul>
     );
   }

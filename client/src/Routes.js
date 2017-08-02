@@ -6,6 +6,8 @@ import Header from './Header';
 import TodoList from './TodoList';
 import About from './About/';
 import food from './Food';
+import AddItem from './AddItem';
+
 
 import {Switch, Route} from 'react-router-dom';
 
@@ -18,6 +20,7 @@ const Routes = () => (
             <Route name="TodoList" exact path='/TodoList' component={TodoList}/>
             <Route name="Watson" exact path='/Watson' component={Watson}/>
             <Route name="food" exact path='/food' component={food}/>
+            <Route name="AddItem" exact path='/AddItem' component={AddItem}/>
             
             <Route name="form" exact path='/form' component={Form}/>
         </Switch>

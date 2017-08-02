@@ -1,4 +1,4 @@
-import { autorun, observable,computed } from "mobx"
+import {observable,computed } from "mobx"
 
 class Todo {
   @observable value;
@@ -44,8 +44,3 @@ class TodoStore {
 var store = window.store = new TodoStore();
 
 export default store;
-
-autorun(()=>{
-    // console.log(store.filter)
-    // console.log(store.todos[0])
-})
