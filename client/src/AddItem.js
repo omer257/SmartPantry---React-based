@@ -11,7 +11,8 @@ class App extends Component {
       action='/upload' 
       method='post' 
       encType="multipart/form-data">
-        <input type="file" name="sampleFile" />
+        <input type="text" name="text" /><br />
+        <input type="file" name="sampleFile" /><br />
         <input type='submit' value='Upload!' />
     </form> 
       </div>

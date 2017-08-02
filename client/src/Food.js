@@ -1,9 +1,23 @@
 import React, { Component } from 'react';
 import './App.css';
+import { inject, observer } from 'mobx-react';
+
+@inject('ingredientsStore')
+@observer
 class App extends Component {
   // Initialize state
-  state = { recipes: [],recipesCount: 12,ingredients: 'garlic,scallion,artichokes,canned tuna,soya sauce,tomatos,corn,potatos,chicken breast,chicken liver,teriyaki,ginger,lemon,rice wine vinegar' }
+  state = { recipes: [],recipesCount: 12,ingredients: '' }
 
+  
+
+componentWillMount(){
+    let ingredientsList = ''
+    this.props.ingredientsStore.filteredingredientsStores.map((item)=>{
+      ingredientsList+=item.value + ',';
+    });
+    this.setState({ ingredients:ingredientsList })
+    
+    }
   // Fetch passwords after first mount
   componentDidMount() {
     this.getPasswords();
@@ -27,7 +41,7 @@ class App extends Component {
         {recipes.length ? (
           <div>
             <h1>{recipesCount} Recipes.</h1>
-            {ingredients.split(",")}
+            {ingredients}
             <ul className="passwords">
               {recipes.map((item, index) =>
                 <li key={index}>
@@ -55,6 +69,7 @@ class App extends Component {
           // Render a helpful message otherwise
           <div>
             <h1>Fetching recipes</h1>
+            <img src="https://s-media-cache-ak0.pinimg.com/originals/dc/66/53/dc6653448a617b0564541708101d3eac.gif" alt=""/>
           </div>
         )}
       </div>

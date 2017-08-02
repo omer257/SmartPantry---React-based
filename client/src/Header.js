@@ -15,7 +15,7 @@ class App extends React.Component {
               <Link to="/form">form</Link>
             </li>
             <li>
-              <Link to="/TodoList">TodoList</Link>
+              <Link to="/ingredientsList">ingredientsList</Link>
             </li>
             <li>
               <Link to="/Watson">Watson</Link>
@@ -25,6 +25,9 @@ class App extends React.Component {
             </li>
             <li>
               <Link to="/AddItem">AddItem</Link>
+            </li>
+            <li>
+              <Link to="/DB">DB</Link>
             </li>
           </ul>
     );

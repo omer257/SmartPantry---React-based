@@ -1,34 +1,33 @@
 const express = require('express');
 const path = require('path');
 const generatePassword = require('password-generator');
-var watson = require('watson-developer-cloud');
-var fs = require('fs');
-var unirest = require('unirest');
-var bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
+const unirest = require('unirest');
+const watson = require('watson-developer-cloud');
+const fs = require('fs');
+const bodyParser = require('body-parser');
 
 const app = express();
 
-
 // use bodyParser
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(fileUpload());
-// Serve static files from the React app
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(fileUpload());
 
-app.post('/upload', function(req, res) {
-  if (!req.files)
+app.post('/upload', function (req, res) {
+  if (!req.files) 
     return res.status(400).send('No files were uploaded.');
- 
-  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file 
+  
+  // The name of the input field (i.e. "sampleFile") is used to retrieve the
+  // uploaded file
   let sampleFile = req.files.sampleFile;
- 
-  // Use the mv() method to place the file somewhere on your server 
-  sampleFile.mv('/somewhere/on/your/server/filename.jpg', function(err) {
-    if (err)
+
+  // Use the mv() method to place the file somewhere on your server
+  sampleFile.mv('/somewhere/on/your/server/filename.jpg', function (err) {
+    if (err) 
       return res.status(500).send(err);
- 
+    
     res.send('File uploaded!');
   });
 });
@@ -48,15 +47,11 @@ app.get('/api/passwords', (req, res) => {
   console.log(`Sent ${count} passwords`);
 });
 
-// app.delete('/beers/:beerId', function (req, res, next) {
-//   Beer.findByIdAndRemove(req.body req.params.beerId, handler(res, next));
-// });
-// Put all API endpoints under '/api'
-app.get('/api/food/:count/:ingredients', (req, res) => {
+// Autocomplete food api
+app.get('/api/food/autocomplete/:string', (req, res) => {
   unirest
-    .get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredi" +
-      "ents?fillIngredients=true&ingredients="+req.params.ingredients+"&limitLicense=false" +
-       "&number="+req.params.count+"&ranking=2")
+    .get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/ingredients/auto" +
+      "complete?metaInformation=false&number=10&query=" + req.params.string)
     .header("X-Mashape-Key", "ZZkHaioXJOmshgsv5EMbDD34Sd8cp1UBiB1jsnhhQB5yF9DYh2")
     .header("Accept", "application/json")
     .end(function (result) {
@@ -64,7 +59,21 @@ app.get('/api/food/:count/:ingredients', (req, res) => {
       res.json(result.body);
     });
 });
-// Put all API endpoints under '/api'
+
+//Food api search recepie by ingredients
+app.get('/api/food/:count/:ingredients', (req, res) => {
+  unirest
+    .get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredi" +
+      "ents?fillIngredients=true&ingredients=" + req.params.ingredients + "&limitLicense=false&number=" + req.params.count + "&ranking=2")
+    .header("X-Mashape-Key", "ZZkHaioXJOmshgsv5EMbDD34Sd8cp1UBiB1jsnhhQB5yF9DYh2")
+    .header("Accept", "application/json")
+    .end(function (result) {
+      console.log(result.status, result.headers, result.body);
+      res.json(result.body);
+    });
+});
+
+// Watson api after image exist
 app.get('/api/watson', (req, res) => {
   var visual_recognition = watson.visual_recognition({api_key: 'd79067c7cb9a927a0e6232a140c25ee649192980', version: 'v3', version_date: '2016-05-20'});
   var sFileName = path.join(__dirname, 'resources/soya.png');
@@ -95,4 +104,4 @@ app.get('*', (req, res) => {
 const port = process.env.PORT || 5000;
 app.listen(port);
 
-console.log(`Password generator listening on ${port}`);
+console.log(`Foodie app listening on ${port}`);

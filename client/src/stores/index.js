@@ -1,6 +1,6 @@
-import todostore from './TodoStore'
+import ingredientsStore from './ingredientsStore'
 
 const stores = {
-    todostore,
+    ingredientsStore,
 }
 export default stores;

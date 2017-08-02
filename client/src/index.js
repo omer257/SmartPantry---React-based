@@ -13,7 +13,7 @@ const routingStore = new RouterStore();
 const Providerstores = {
     // Key can be whatever you want
     routing: routingStore,
-    todostore:stores.todostore,
+    ingredientsStore:stores.ingredientsStore,
     // ...other stores
 };
 

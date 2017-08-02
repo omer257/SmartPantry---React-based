@@ -24,20 +24,15 @@ class App extends Component {
         {/* Render the passwords if we have them */}
         {item.length ? (
           <div>
-            <h1>5 Passwords.</h1>
             <ul className="passwords">
               {item}
             </ul>
-            <button
-              className="more"
-              onClick={this.getPasswords}>
-              Get More
-            </button>
           </div>
         ) : (
           // Render a helpful message otherwise
           <div>
             <h1>Asking watson</h1>
+            <img src="http://media.giphy.com/media/LPBYImbgzsKpG/giphy.gif" alt=""/>
           </div>
         )}
       </div>
