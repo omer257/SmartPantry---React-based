@@ -17,6 +17,12 @@ class App extends React.Component {
             <li>
               <Link to="/TodoList">TodoList</Link>
             </li>
+            <li>
+              <Link to="/Watson">Watson</Link>
+            </li>
+            <li>
+              <Link to="/food">food</Link>
+            </li>
           </ul>
     );
   }
