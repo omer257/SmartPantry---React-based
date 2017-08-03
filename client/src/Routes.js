@@ -1,12 +1,11 @@
 import React from 'react';
-import Watson from './Watson';
+import Watson from './Ingredients/Watson';
 import App from './App';
-import Form from './Form';
-import Header from './Header';
-import ingredientsList from './ingredientsList';
+import Form from './Ingredients/Form';
+import Header from './Common/Header';
+import ingredientsList from './Ingredients/ingredientsList';
 import About from './About/';
-import food from './Food';
-import AddItem from './AddItem';
+import RecipesList from './Recipes/RecipesList';
 import DB from './DB';
 
 import {Switch, Route} from 'react-router-dom';
@@ -19,8 +18,7 @@ const Routes = () => (
             <Route name="About" exact path='/About' component={About}/>
             <Route name="ingredientsList" exact path='/ingredientsList' component={ingredientsList}/>
             <Route name="Watson" exact path='/Watson' component={Watson}/>
-            <Route name="food" exact path='/food' component={food}/>
-            <Route name="AddItem" exact path='/AddItem' component={AddItem}/>
+            <Route name="RecipesList" exact path='/RecipesList' component={RecipesList}/>
             <Route name="DB" exact path='/DB' component={DB}/>
             
             <Route name="form" exact path='/form' component={Form}/>

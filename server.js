@@ -6,7 +6,7 @@ const unirest = require('unirest');
 const watson = require('watson-developer-cloud');
 const fs = require('fs');
 const bodyParser = require('body-parser');
-
+const Clarifai = require('clarifai');
 const app = express();
 
 // use bodyParser
@@ -14,6 +14,23 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'client/build')));
 app.use(fileUpload());
+// instantiate a new Clarifai app passing in your api key.
+const Clarifaiapp = new Clarifai.App({
+ apiKey: 'bcafe00f744d4fc3a67d0b78951e9fb2'
+});
+
+app.get('/demo', function (req, res) {
+  // predict the contents of an image by passing in a url
+Clarifaiapp.models.predict(Clarifai.GENERAL_MODEL, 'https://samples.clarifai.com/metro-north.jpg').then(
+  function(response) {
+    res.send(response);
+    console.log(response);
+  },
+  function(err) {
+    console.error(err);
+  }
+);
+});
 
 app.post('/upload', function (req, res) {
   if (!req.files) 
@@ -88,7 +105,7 @@ app.get('/api/watson', (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      console.log(results.images[0]);
+      console.log(results.images[0].classifiers);
       res.json(JSON.stringify(results.images[0].classifiers, null, 2));
     }
   });

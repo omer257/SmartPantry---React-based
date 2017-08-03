@@ -6,6 +6,7 @@ import {Provider} from 'mobx-react';
 import {RouterStore, syncHistoryWithStore} from 'mobx-react-router';
 import Routes from './Routes';
 import stores from './stores';
+import './App.css'; 
 
 const browserHistory = createBrowserHistory();
 const routingStore = new RouterStore();
@@ -14,8 +15,10 @@ const Providerstores = {
     // Key can be whatever you want
     routing: routingStore,
     ingredientsStore:stores.ingredientsStore,
+    store:stores.AjaxStore
     // ...other stores
 };
+
 
 const history = syncHistoryWithStore(browserHistory, routingStore);
 
