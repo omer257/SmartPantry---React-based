@@ -13,7 +13,7 @@
     "watson-developer-cloud": "^2.37.0"
   },
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "test": "cd client && npm install --only=dev && npm install && npm run build"
   }
 }
