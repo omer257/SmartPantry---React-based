@@ -7,8 +7,6 @@ class App extends Component {
   // Initialize state
   state = { recipes: [],recipesCount: 12,ingredients: '' }
 
-  
-
 componentWillMount(){
     let ingredientsList = ''
     this.props.ingredientsStore.filteredingredientsStores.map((item)=>{
@@ -35,34 +33,39 @@ componentWillMount(){
   render() {
     const { recipes,ingredients,recipesCount } = this.state;
     return (
-      <div className="App">
-        {/* Render the passwords if we have them */}
-        {recipes.length ? (
+      <div className="row">
+        {recipes.length ? ( 
           <div>
-            <h1>{recipesCount} Recipes.</h1>
             {ingredients}
-            <ul className="passwords">
+            <h1>{recipesCount} Recipes.</h1>
               {recipes.map((item, index) =>
-                <li key={index}>
-                  <h2>{item.title}</h2><br />
-                  <img src={item.image} alt="{item.title}" style={{width:100}}/><br />
-                  likes:{item.likes}<br />
-                  <b>usedIngredientCount</b>:{item.usedIngredientCount}
-                    {item.usedIngredients.map((item, index) =>
-                      <div key={index}>{item.amount}{item.unit} - {item.name}</div>
-                    )}
-                  <b>missedIngredientCount</b>:{item.missedIngredientCount}<br />
-                    {item.missedIngredients.map((item, index) =>
-                      <div key={index}>{item.amount}{item.unit} - {item.name}</div>
-                    )}
-                </li>
+              <div className="card col-sm-3">
+          <img className="card-img-top img-responsive" src={item.image} alt={item.title} />
+          <div className="card-block">
+            <h4 className="card-title">{item.title}</h4>
+            <p className="card-text">Description:soon.</p>
+          </div>
+          <ul className="list-group list-group-flush">
+            <li className="list-group-item">likes:{item.likes}</li>
+            <li className="list-group-item">
+              <b>Instock:</b>{item.usedIngredientCount}
+              {item.usedIngredients.map((item, index) =>
+              <div key={index}>{item.amount}{item.unit} - {item.name}</div>
+              )}</li>
+            <li className="list-group-item">
+              <b>{item.missedIngredientCount} items missing</b><br />
+              {item.missedIngredients.map((item, index) =>
+              <div key={index}>{item.amount}{item.unit} - {item.name}</div>
               )}
-            </ul>
-            <button
-              className="more"
-              onClick={this.getPasswords}>
-              Get More
-            </button>
+            </li>
+          </ul>
+          <div className="card-block">
+            <a href="#" className="card-link">Card link</a>
+            <a href="#" className="card-link">Another link</a>
+          </div>
+        </div>  
+        
+              )}
           </div>
         ) : (
           // Render a helpful message otherwise

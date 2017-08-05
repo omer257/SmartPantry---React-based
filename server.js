@@ -8,6 +8,8 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 const Clarifai = require('clarifai');
 const app = express();
+var mv = require('mv');
+
 
 // use bodyParser
 app.use(bodyParser.json());
@@ -15,24 +17,24 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'client/build')));
 app.use(fileUpload());
 // instantiate a new Clarifai app passing in your api key.
-const Clarifaiapp = new Clarifai.App({
- apiKey: 'bcafe00f744d4fc3a67d0b78951e9fb2'
-});
+const Clarifaiapp = new Clarifai.App({apiKey: 'bcafe00f744d4fc3a67d0b78951e9fb2'});
 
 app.get('/demo', function (req, res) {
   // predict the contents of an image by passing in a url
-Clarifaiapp.models.predict(Clarifai.GENERAL_MODEL, 'https://samples.clarifai.com/metro-north.jpg').then(
-  function(response) {
-    res.send(response);
-    console.log(response);
-  },
-  function(err) {
-    console.error(err);
-  }
-);
+  Clarifaiapp
+    .models
+    .predict(Clarifai.GENERAL_MODEL, 'https://samples.clarifai.com/metro-north.jpg')
+    .then(function (response) {
+      res.send(response);
+      console.log(response);
+    }, function (err) {
+      console.error(err);
+    });
 });
 
 app.post('/upload', function (req, res) {
+  console.log(req.files);
+  res.send(req.files);
   if (!req.files) 
     return res.status(400).send('No files were uploaded.');
   
@@ -41,7 +43,7 @@ app.post('/upload', function (req, res) {
   let sampleFile = req.files.sampleFile;
 
   // Use the mv() method to place the file somewhere on your server
-  sampleFile.mv('/somewhere/on/your/server/filename.jpg', function (err) {
+  sampleFile.mv('/filename.jpg', function (err) {
     if (err) 
       return res.status(500).send(err);
     

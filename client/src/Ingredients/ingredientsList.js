@@ -7,23 +7,7 @@ import {inject, observer} from 'mobx-react';
 @inject('ingredientsStore')
 @observer
 export default class ingredientsList extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            itemName: '',
-            itemQuantity: '',
-            itemType: '',
-            itemDate: ''
-        }
-    }
-    createingredientsStore(e) {
-        e.preventDefault();
-        let state = this.state;
-        this
-            .props
-            .ingredientsStore
-            .createingredientsStore(state.itemName, state.itemQuantity, state.itemType, state.itemDate);
-    }
+
     deleteingredientsStore(ingredientsStoreItem) {
         this
             .props
@@ -36,7 +20,7 @@ export default class ingredientsList extends React.Component {
             .ingredientsStore
             .upgradeingredientsStore(ingredientsStoreItem);
     }
-    toggleComplete(ingredientsStoreItem) {
+    toggleInuse(ingredientsStoreItem) {
         this
             .props
             .ingredientsStore
@@ -46,20 +30,15 @@ export default class ingredientsList extends React.Component {
         this.props.ingredientsStore.filter = e.target.value;
     }
     render() {
-        const options = this
-            .props
-            .ingredientsStore
-            .IngredientType
-            .map((item) => (
-                <option key={item.id} value={item.id}>{item.name}</option>
-            ));
+        const {filter, filteredingredientsStores, clearInuse, IngredientType, IngredientQuantity} = this.props.ingredientsStore;
 
-        const {filter, filteredingredientsStores, clearCompleted} = this.props.ingredientsStore;
+        const options = IngredientType.map((item) => (
+            <option key={item.id} value={item.id}>{item.name}</option>
+        ));
         let ingredientsList = filteredingredientsStores.map((ingredientsStoreItem, index) => {
-            return <li key={index}>
-                {ingredientsStoreItem.quantity}
-                - {ingredientsStoreItem.value}
-                <small>- ({ingredientsStoreItem.type}) - ({ingredientsStoreItem.date})</small>
+            return <div className="well" key={index}>
+                <b>{ingredientsStoreItem.value}</b>-{IngredientType[ingredientsStoreItem.type].name}
+                <small>Valid until:- ({ingredientsStoreItem.date})</small>
                 <input
                     type="number"
                     className="form-control"
@@ -72,68 +51,47 @@ export default class ingredientsList extends React.Component {
 
                 <input
                     type="checkbox"
-                    value={ingredientsStoreItem.complete}
-                    checked={ingredientsStoreItem.complete}
+                    value={ingredientsStoreItem.Inuse}
+                    checked={ingredientsStoreItem.Inuse}
                     onChange={this
-                    .toggleComplete
+                    .toggleInuse
                     .bind(this, ingredientsStoreItem)}/>
                 <span
+                    className="glyphicon glyphicon-trash"
                     onClick={this
                     .deleteingredientsStore
-                    .bind(this, ingredientsStoreItem)}>X
-                </span>
-            </li>
+                    .bind(this, ingredientsStoreItem)}></span>
+            </div>
         })
         return (
-            <div>
-                <h1>ingredientsStore</h1>
-                <div>{filter}</div>
-                <form
-                    action="#"
-                    id="getWeatherForm"
-                    onSubmit={this
-                    .createingredientsStore
-                    .bind(this)}>
-                    <div className="input-group">
-                        <AutoComplete onChange={(value) => this.setState({itemName: value})} />
-                        
+            <div className="row">
+                <h1>Ingredient list</h1>
+                <br/>
+                
+                <form className="form-inline">
+                    <div className="form-group">
+                        <label htmlFor="filter">Search by&nbsp;</label>
                         <input
+                            id="filter"
+                            className="form-control"
                             type="text"
-                            className="text-box"
-                            id="itemDate"
-                            placeholder="Enter itemDate"
-                            required
-                            value={this.state.itemDate}
-                            onChange={(event) => this.setState({itemDate: event.target.value})}/>
-                        <input
-                            type="number"
-                            className="text-box"
-                            id="itemQuantity"
-                            placeholder="Enter itemQuantity"
-                            required
-                            value={this.state.itemQuantity}
-                            onChange={(event) => this.setState({itemQuantity: event.target.value})}/>
+                            value={filter}
+                            onChange={this
+                            .filter
+                            .bind(this)}/></div>
+                    <div className="form-group">
+                        <label htmlFor="itemType">Category:&nbsp;</label>
                         <select
+                            className="form-control"
                             onChange={(event) => this.setState({itemType: event.target.value})}
                             id="itemType">
                             {options}
                         </select>
-                        <span className="input-group-btn">
-                            <button className="btn btn-default" type="submit">Go!</button>
-                        </span>
                     </div>
+                    <div className="form-group" onClick={clearInuse}>Show Unused className=</div>
+                    <button type="submit" className="btn btn-default">Submit</button>
                 </form>
-                {/*<label htmlFor="create">Add<input id="create" className="create" type="text" onKeyPress={this.createingredientsStore.bind(this)}/></label>*/}
-                <label htmlFor="filter">Search<input
-                    id="filter"
-                    className="filter"
-                    type="text"
-                    value={filter}
-                    onChange={this
-                .filter
-                .bind(this)}/></label>
-                <ul>{ingredientsList}</ul>
-                <div onClick={clearCompleted}>Show completed</div>
+                <br/> {ingredientsList}
             </div>
         );
     }

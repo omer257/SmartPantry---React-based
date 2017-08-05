@@ -49,6 +49,7 @@ class AutoComplete extends React.Component {
       }
     } else if (this.openMenu === false && e.target.className === 'text-box' && this.props.store.searchString.length > 0) {
       this.openMenu = true;
+      console.log();
     }
   };
 
@@ -93,6 +94,7 @@ class AutoComplete extends React.Component {
       )
     }
 
+    this.props.onChange(this._input.value);//Feed parant
   };
 
   _upArrow(e) {
@@ -131,7 +133,7 @@ class AutoComplete extends React.Component {
 
   _selectItem() {
     this._input.value = this.props.store.selectedItem.name;
-    this.props.onChange(this._input.value);
+    this.props.onChange(this._input.value);//Feed parant
   }
 
   _selectItemByClick = (e, data) => {
@@ -173,7 +175,7 @@ class AutoComplete extends React.Component {
             <input
               type="text"
               name={this.props.name}
-              className="text-box"
+              className="form-control"
               autoComplete="off"
               placeholder="Type something, e.g. Banana"
               ref={i => this._input = i}

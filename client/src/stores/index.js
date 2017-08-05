@@ -1,8 +1,8 @@
 import ingredientsStore from './ingredientsStore'
-import AjaxStore from './AjaxStore'
+import AutoCompleteStore from './AutoCompleteStore'
 
 const stores = {
     ingredientsStore,
-    AjaxStore
+    AutoCompleteStore
 }
 export default stores;

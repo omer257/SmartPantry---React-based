@@ -6,7 +6,7 @@ class ingredientsStoreItem {
   @observable date;
   @observable type;
   @observable quantity;
-  @observable complete;
+  @observable Inuse;
 
   constructor(itemName, itemQuantity, itemType, itemDate) {
     this.value = itemName;
@@ -14,27 +14,33 @@ class ingredientsStoreItem {
     this.quantity = itemQuantity || 1;
     this.type = itemType || 1;
     this.id = Date.now();
-    this.complete = false;
+    this.Inuse = true;
   }
 }
 
 let IngredientType= [
   {
-    id: 1,
-    name: 'Vegatable'
+    id: 0,
+    name: 'All'
   }, {
-    id: 2,
+    id: 1,
     name: 'Dairy'
   }, {
-    id: 3,
+    id: 2,
     name: 'Canned goods'
   }, {
-    id: 4,
+    id: 3,
     name: 'Pultry'
+  }, {
+    id: 4,
+    name: 'Vegatable'
   }
 ];
 
+let IngredientQuantity= [1,2,3,4,5,6,7];
+
 class ingredientsStore {
+  @observable IngredientQuantity = IngredientQuantity
   @observable IngredientType = IngredientType
   @observable ingredientsStores = []
   @observable filter = ""
@@ -48,7 +54,7 @@ class ingredientsStore {
   createingredientsStore(itemName, itemQuantity, itemType, itemDate) {
     this
       .ingredientsStores
-      .push(new ingredientsStoreItem(itemName, itemQuantity, itemDate));
+      .push(new ingredientsStoreItem(itemName, itemQuantity, itemType, itemDate));
   }
 
   deleteingredientsStore(value) {
@@ -61,41 +67,41 @@ class ingredientsStore {
 
   upgradeingredientsStore(value, value2) {
     if (this.ingredientsStores.indexOf(value) > -1) {
-      let isComplete = this.ingredientsStores[
+      let isInuse = this.ingredientsStores[
         this
           .ingredientsStores
           .indexOf(value)
-      ].complete;
+      ].Inuse;
       this.ingredientsStores[
         this
           .ingredientsStores
           .indexOf(value)
-      ].complete = !isComplete;
+      ].Inuse = !isInuse;
     }
   }
 
-  toggleComplete(value) {
+  toggleInuse(value) {
     if (this.ingredientsStores.indexOf(value) > -1) {
-      let isComplete = this.ingredientsStores[
+      let isInuse = this.ingredientsStores[
         this
           .ingredientsStores
           .indexOf(value)
-      ].complete;
+      ].Inuse;
       this.ingredientsStores[
         this
           .ingredientsStores
           .indexOf(value)
-      ].complete = !isComplete;
+      ].Inuse = !isInuse;
     }
   }
 
-  clearCompleted = () => {
-    const inCompletedingredientsStores = this
+  clearInuse = () => {
+    const inInuseingredientsStores = this
       .ingredientsStores
-      .filter(ingredientsStore => !ingredientsStore.complete)
+      .filter(ingredientsStore => !ingredientsStore.Inuse)
     this
       .ingredientsStores
-      .replace(inCompletedingredientsStores);
+      .replace(inInuseingredientsStores);
   }
 }
 var store = window.store = new ingredientsStore();
