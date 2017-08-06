@@ -53,7 +53,6 @@ class AutoComplete extends React.Component {
       }
     } else if (this.openMenu === false && e.target.className === 'text-box' && this.props.store.searchString.length > 0) {
       this.openMenu = true;
-      console.log();
     }
   };
 

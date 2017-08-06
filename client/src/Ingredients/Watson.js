@@ -22,10 +22,7 @@ class App extends Component {
             if (oReq.status === 200) {
               let data = JSON.parse(oReq.response);
               let parseAgain = JSON.parse(data)
-              console.log('what about this?');
-              console.log(parseAgain['0']);
-              that.setState({ fetched:true,fetching:false  })
-              that.setState({ item:parseAgain['0'].classes })
+              that.setState({ item:parseAgain['0'].classes,fetched:true,fetching:false })
             } else {
                 console.log('Bad');
             }

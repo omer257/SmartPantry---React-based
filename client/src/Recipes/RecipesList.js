@@ -4,8 +4,13 @@ import { inject, observer } from 'mobx-react';
 @inject('ingredientsStore')
 @observer
 class App extends Component {
-  // Initialize state
-  state = { recipes: [],recipesCount: 13,ingredients: '' }
+
+  constructor(props) {
+      super(props);
+      this.state = {
+          recipes: [],recipesCount: 13,ingredients: ''
+      }
+  }
 
 componentWillMount(){
     let ingredientsList = ''
@@ -26,7 +31,6 @@ componentWillMount(){
       .then(res => res.json())
       .then(recipes => {
         this.setState({ recipes })
-        console.log(recipes);
       });
   }
 

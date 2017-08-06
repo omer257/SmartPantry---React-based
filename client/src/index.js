@@ -15,7 +15,8 @@ const Providerstores = {
     // Key can be whatever you want
     routing: routingStore,
     ingredientsStore:stores.ingredientsStore,
-    store:stores.AutoCompleteStore
+    store:stores.AutoCompleteStore,
+    UserStore:stores.UserStore
     // ...other stores
 };
 

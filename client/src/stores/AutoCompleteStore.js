@@ -22,7 +22,6 @@ const store = new class Store {
       fetch('/api/food/autocomplete/'+this.searchString)
       .then(res => res.json())
       .then(res => {
-          console.log(res)
           this.matches = res;
       })
       .catch(() => {
