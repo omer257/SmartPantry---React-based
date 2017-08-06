@@ -5,7 +5,7 @@ import { inject, observer } from 'mobx-react';
 @observer
 class App extends Component {
   // Initialize state
-  state = { recipes: [],recipesCount: 12,ingredients: '' }
+  state = { recipes: [],recipesCount: 13,ingredients: '' }
 
 componentWillMount(){
     let ingredientsList = ''
@@ -17,10 +17,10 @@ componentWillMount(){
     }
   // Fetch passwords after first mount
   componentDidMount() {
-    this.getPasswords();
+    this.getData();
   }
 
-  getPasswords = () => {
+  getData = () => {
     // Get the passwords and store them in state
     fetch('/api/food/'+this.state.recipesCount+'/'+this.state.ingredients)
       .then(res => res.json())
@@ -39,11 +39,11 @@ componentWillMount(){
             {ingredients}
             <h1>{recipesCount} Recipes.</h1>
               {recipes.map((item, index) =>
-              <div className="card col-sm-3">
+              <div className="card col-sm-3" key={index}>
           <img className="card-img-top img-responsive" src={item.image} alt={item.title} />
           <div className="card-block">
             <h4 className="card-title">{item.title}</h4>
-            <p className="card-text">Description:soon.</p>
+            {/*<p className="card-text">Description:soon.</p>*/}
           </div>
           <ul className="list-group list-group-flush">
             <li className="list-group-item">likes:{item.likes}</li>
@@ -59,10 +59,10 @@ componentWillMount(){
               )}
             </li>
           </ul>
-          <div className="card-block">
+          {/*<div className="card-block">
             <a href="#" className="card-link">Card link</a>
             <a href="#" className="card-link">Another link</a>
-          </div>
+          </div>*/}
         </div>  
         
               )}

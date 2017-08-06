@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AutoComplete from './AutoComplete';
 
 import {inject, observer} from 'mobx-react';
 
@@ -29,45 +28,56 @@ export default class ingredientsList extends React.Component {
     filter(e) {
         this.props.ingredientsStore.filter = e.target.value;
     }
+    filterCategory(e) {
+        this.props.ingredientsStore.filterCatagory = e.target.value;
+    }
     render() {
-        const {filter, filteredingredientsStores, clearInuse, IngredientType, IngredientQuantity} = this.props.ingredientsStore;
+        const {filter, filteredingredientsStores, clearInuse, IngredientType, filterUse} = this.props.ingredientsStore;
 
         const options = IngredientType.map((item) => (
             <option key={item.id} value={item.id}>{item.name}</option>
         ));
         let ingredientsList = filteredingredientsStores.map((ingredientsStoreItem, index) => {
-            return <div className="well" key={index}>
-                <b>{ingredientsStoreItem.value}</b>-{IngredientType[ingredientsStoreItem.type].name}
-                <small>Valid until:- ({ingredientsStoreItem.date})</small>
-                <input
-                    type="number"
-                    className="form-control"
-                    id="itemQuantity"
-                    required
-                    value={ingredientsStoreItem.quantity}
-                    onChange={this
-                    .updateingredientsStore
-                    .bind(this, ingredientsStoreItem, 2)}/>
+            return <div className="col-sm-3" key={index}>
+                <div className="well">
+                    <div
+                        style={{
+                        float: 'left',
+                        width: '90%'
+                    }}>
+                        <b>{ingredientsStoreItem.value}</b>
+                    </div>
+                    <div
+                        style={{
+                        float: 'right',
+                        width: '10%'
+                    }}>
+                        <span
+                            className="glyphicon glyphicon-trash"
+                            onClick={this
+                            .deleteingredientsStore
+                            .bind(this, ingredientsStoreItem)}></span>
+                    </div>
+                    <small>Amount :{ingredientsStoreItem.quantity}</small><br/>
+                    <small>Category:{IngredientType[ingredientsStoreItem.type].name}</small><br/>
+                    <small>Valid until: ({ingredientsStoreItem.date})</small><br/>
+                    <small>Use item:
+                        <input
+                            type="checkbox"
+                            value={ingredientsStoreItem.Inuse}
+                            checked={ingredientsStoreItem.Inuse}
+                            onChange={this
+                            .toggleInuse
+                            .bind(this, ingredientsStoreItem)}/></small><br/>
 
-                <input
-                    type="checkbox"
-                    value={ingredientsStoreItem.Inuse}
-                    checked={ingredientsStoreItem.Inuse}
-                    onChange={this
-                    .toggleInuse
-                    .bind(this, ingredientsStoreItem)}/>
-                <span
-                    className="glyphicon glyphicon-trash"
-                    onClick={this
-                    .deleteingredientsStore
-                    .bind(this, ingredientsStoreItem)}></span>
+                </div>
             </div>
         })
         return (
             <div className="row">
                 <h1>Ingredient list</h1>
                 <br/>
-                
+
                 <form className="form-inline">
                     <div className="form-group">
                         <label htmlFor="filter">Search by&nbsp;</label>
@@ -83,13 +93,14 @@ export default class ingredientsList extends React.Component {
                         <label htmlFor="itemType">Category:&nbsp;</label>
                         <select
                             className="form-control"
-                            onChange={(event) => this.setState({itemType: event.target.value})}
+                            onChange={this
+                            .filterCategory
+                            .bind(this)}
                             id="itemType">
                             {options}
                         </select>
                     </div>
-                    <div className="form-group" onClick={clearInuse}>Show Unused className=</div>
-                    <button type="submit" className="btn btn-default">Submit</button>
+                    <div className="form-group" onClick={clearInuse}> {filterUse}</div>
                 </form>
                 <br/> {ingredientsList}
             </div>

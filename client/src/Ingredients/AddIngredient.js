@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import AutoComplete from './AutoComplete';
+import {Link} from 'react-router-dom'; //Calling link to bind with router
 
 import {inject, observer} from 'mobx-react';
 
@@ -13,7 +14,8 @@ export default class ingredientsList extends React.Component {
             itemName: '',
             itemQuantity: '',
             itemType: '',
-            itemDate: ''
+            itemDate: '',
+            itemNameFetched:this.props.match.params.name
         }
     }
     createingredientsStore(e) {
@@ -26,20 +28,33 @@ export default class ingredientsList extends React.Component {
     }
     render() {
 
-        const {filter, filteredingredientsStores, clearInuse, IngredientType,IngredientQuantity} = this.props.ingredientsStore;
+        const { IngredientType,IngredientQuantity,validityType} = this.props.ingredientsStore;
 
-        const options = IngredientType
+        const validityTypeOptions = validityType
+            .map((item) => (
+                <option key={item.id} value={item.id}>{item.name}</option>
+            ));
+
+       const options = IngredientType
             .map((item) => (
                 <option key={item.id} value={item.id}>{item.name}</option>
             ));
 
         const quantity = IngredientQuantity.map((item) => (
             <option key={item} value={item}>{item}</option>
-        ));
-
+        )); 
+        
         return (
             <div>
                 <h1>Add ingredient</h1>
+                <div>
+                    <Link to="/Watson">
+                    <img style={{width:'200px'}} src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/device-camera-icon.png" alt=""/>
+                    <h3>Click here to load image</h3>
+                    </Link>
+                </div>
+                <hr/>
+                <h3>Or type the details</h3>
                 <form
                     action="#"
                     id="getWeatherForm"
@@ -48,18 +63,16 @@ export default class ingredientsList extends React.Component {
                     .bind(this)}>
                     <div className="form-group">
                         <label htmlFor="email">Ingredient name:</label>
-                        <AutoComplete onChange={(value) => this.setState({itemName: value})}/>
+                        <AutoComplete value={this.state.itemNameFetched} onChange={(value) => this.setState({itemName: value})}/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="itemDate">Ingredient validity:</label>
-                        <input
-                            type="text"
+                        <select
                             className="form-control"
-                            id="itemDate"
-                            placeholder="Enter itemDate"
-                            required
-                            value={this.state.itemDate}
-                            onChange={(event) => this.setState({itemDate: event.target.value})}/>
+                            onChange={(event) => this.setState({itemDate: event.target.value})}
+                            id="itemDate">
+                            {validityTypeOptions}
+                        </select>
                     </div>
                     <div className="form-group">
                         <label htmlFor="itemQuantity">Ingredient quantity:</label>

@@ -18,37 +18,81 @@ class ingredientsStoreItem {
   }
 }
 
-let IngredientType= [
+let IngredientType = [
   {
-    id: 0,
+    id: '',
     name: 'All'
   }, {
     id: 1,
-    name: 'Dairy'
+    name: 'Fresh fruit/vegetable'
   }, {
     id: 2,
-    name: 'Canned goods'
+    name: 'Canned food'
   }, {
     id: 3,
-    name: 'Pultry'
+    name: 'Pultry/beef/fish'
   }, {
     id: 4,
-    name: 'Vegatable'
+    name: 'Frozen fruit/vegetable'
+  }, {
+    id: 5,
+    name: 'Sauces'
+  }, {
+    id: 6,
+    name: 'Dry food'
+  }, {
+    id: 7,
+    name: 'Dairy'
+  }, {
+    id: 8,
+    name: 'Sauce'
   }
 ];
 
-let IngredientQuantity= [1,2,3,4,5,6,7];
+let validityType = [
+  {
+    id: 1,
+    name: '1 day'
+  }, {
+    id: 3,
+    name: '3 day'
+  }, {
+    id: 5,
+    name: '5 day'
+  }, {
+    id: 7,
+    name: '1 week'
+  }, {
+    id: 14,
+    name: '2 weeks'
+  }
+];
+
+let IngredientQuantity = [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7
+];
 
 class ingredientsStore {
   @observable IngredientQuantity = IngredientQuantity
   @observable IngredientType = IngredientType
+  @observable validityType = validityType
   @observable ingredientsStores = []
   @observable filter = ""
+  @observable filterCatagory = ""
+  @observable filterUse = "Show in use"
   @computed get filteredingredientsStores() {
     var matchFilter = new RegExp(this.filter, "i")
+    var matchfilterCatagory = new RegExp(this.filterCatagory, "i")
     return this
       .ingredientsStores
       .filter(ingredientsStore => !this.filter || matchFilter.test(ingredientsStore.value))
+      .filter(ingredientsStore => !this.filterCatagory || matchfilterCatagory.test(ingredientsStore.type))
   }
 
   createingredientsStore(itemName, itemQuantity, itemType, itemDate) {

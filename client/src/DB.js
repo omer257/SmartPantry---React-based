@@ -7,12 +7,15 @@ class App extends Component {
 
 
     componentWillMount(){
-        this.props.ingredientsStore.createingredientsStore('coconut milk',2,3,'1 weeks');
-        this.props.ingredientsStore.createingredientsStore('garlic',2,2,'2 weeks');
-        this.props.ingredientsStore.createingredientsStore('soya sauce',2,3,'3 weeks');
-        this.props.ingredientsStore.createingredientsStore('potatos',2,1,'11 weeks');
-        this.props.ingredientsStore.createingredientsStore('skinless boneless chicken breast',2,2,'2 weeks');
-        this.props.ingredientsStore.createingredientsStore('lemon',2,3,'21 weeks');
+        this.props.ingredientsStore.createingredientsStore('Garlic',1,1,1);
+        this.props.ingredientsStore.createingredientsStore('lemon',1,1,1);
+        this.props.ingredientsStore.createingredientsStore('Tomato',1,1,1);
+        this.props.ingredientsStore.createingredientsStore('Cucumber',1,1,1);
+        this.props.ingredientsStore.createingredientsStore('Onion',1,1,1);
+        this.props.ingredientsStore.createingredientsStore('Tuna',1,2,1);
+        this.props.ingredientsStore.createingredientsStore('Corn',1,2,1);
+        this.props.ingredientsStore.createingredientsStore('Tomato sauce',1,2,1);
+        this.props.ingredientsStore.createingredientsStore('Tomato paste',1,2,1);
     }
 
   render() {

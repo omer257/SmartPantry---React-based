@@ -30,6 +30,10 @@ class AutoComplete extends React.Component {
   }
 
   componentDidMount() {
+    if(this.props.value){
+      this.props.store.searchString = this.props.value;
+      this._onChangeLoad();
+    }
     this._menuSize();
     window.addEventListener('resize', this._onWindowResize);
     document.addEventListener('keyup', this._keyUp);
@@ -84,6 +88,20 @@ class AutoComplete extends React.Component {
 
   _onChange = (e) => {
     this.props.store.searchString = this._input.value;
+    if (this.props.store.searchString.length > 2) {
+      fetch(this.props.store.findMatches()).then((res) => {
+        if (this.props.store.matches.length > 0) 
+          this.openMenu = true;
+        else 
+          this.openMenu = true;
+        }
+      )
+    }
+
+    this.props.onChange(this._input.value);//Feed parant
+  };
+
+  _onChangeLoad = (e) => {
     if (this.props.store.searchString.length > 2) {
       fetch(this.props.store.findMatches()).then((res) => {
         if (this.props.store.matches.length > 0) 

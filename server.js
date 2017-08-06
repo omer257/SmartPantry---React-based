@@ -1,55 +1,57 @@
 const express = require('express');
 const path = require('path');
 const generatePassword = require('password-generator');
-const fileUpload = require('express-fileupload');
 const unirest = require('unirest');
 const watson = require('watson-developer-cloud');
 const fs = require('fs');
 const bodyParser = require('body-parser');
 const Clarifai = require('clarifai');
 const app = express();
-var mv = require('mv');
+var multer = require('multer')
 
+var storage = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, './uploads')
+  },
+  filename: function (req, file, callback) {
+    callback(null, Date.now() + file.originalname)
+  }
+})
+
+var upload = multer({storage: storage}).single('myFile')
 
 // use bodyParser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'client/build')));
-app.use(fileUpload());
-// instantiate a new Clarifai app passing in your api key.
-const Clarifaiapp = new Clarifai.App({apiKey: 'bcafe00f744d4fc3a67d0b78951e9fb2'});
-
-app.get('/demo', function (req, res) {
-  // predict the contents of an image by passing in a url
-  Clarifaiapp
-    .models
-    .predict(Clarifai.GENERAL_MODEL, 'https://samples.clarifai.com/metro-north.jpg')
-    .then(function (response) {
-      res.send(response);
-      console.log(response);
-    }, function (err) {
-      console.error(err);
-    });
-});
 
 app.post('/upload', function (req, res) {
-  console.log(req.files);
-  res.send(req.files);
-  if (!req.files) 
-    return res.status(400).send('No files were uploaded.');
-  
-  // The name of the input field (i.e. "sampleFile") is used to retrieve the
-  // uploaded file
-  let sampleFile = req.files.sampleFile;
+  upload(req, res, function (err) {
+    if (err) {
+      // An error occurred when uploading
+      return res.end("Error loading file!")
+    }
+    var visual_recognition = watson.visual_recognition({api_key: 'd79067c7cb9a927a0e6232a140c25ee649192980', version: 'v3', version_date: '2016-05-20'});
+    var sFileName = path.join(__dirname, req.file.path);
 
-  // Use the mv() method to place the file somewhere on your server
-  sampleFile.mv('/filename.jpg', function (err) {
-    if (err) 
-      return res.status(500).send(err);
-    
-    res.send('File uploaded!');
-  });
-});
+    var params = {
+      images_file: fs.createReadStream(sFileName),
+      threshold: 0.8,
+      // classifier_ids:['Food'],
+    };
+
+    visual_recognition.classify(params, function (err, results) {
+      if (err) {
+        console.log(err);
+      } else {
+        // console.log(results.images[0].classifiers);
+        res.json(JSON.stringify(results.images[0].classifiers, null, 2));
+        // fs.unlink(__dirname, req.file.path);
+      }
+    });
+    // Everything went fine
+  })
+})
 
 // Put all API endpoints under '/api'
 app.get('/api/passwords', (req, res) => {

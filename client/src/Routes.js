@@ -1,7 +1,6 @@
 import React from 'react';
 import Watson from './Ingredients/Watson';
 import App from './App';
-import Form from './Ingredients/Form';
 import Header from './Common/Header';
 import ingredientsList from './Ingredients/ingredientsList';
 import AddIngredient from './Ingredients/AddIngredient';
@@ -23,8 +22,7 @@ const Routes = () => (
             <Route name="RecipesList" exact path='/RecipesList' component={RecipesList}/>
             <Route name="DB" exact path='/DB' component={DB}/>
             <Route name="AddIngredient" exact path='/AddIngredient' component={AddIngredient}/>
-            
-            <Route name="form" exact path='/form' component={Form}/>
+            <Route path="/AddIngredient/:name" component={AddIngredient}/>
             </Switch>
         </div>
     </div>
