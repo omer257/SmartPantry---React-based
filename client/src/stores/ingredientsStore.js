@@ -148,6 +148,6 @@ class ingredientsStore {
       .replace(inInuseingredientsStores);
   }
 }
-var store = window.store = new ingredientsStore();
+var store = new ingredientsStore();
 
 export default store;

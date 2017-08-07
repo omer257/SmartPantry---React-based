@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import firebase from 'firebase';
-
+import PropTypes from 'prop-types';
 import {inject, observer} from 'mobx-react';
+
 var config = {
   apiKey: "AIzaSyAfuf4mOVgXC8Ed-lisZ0u17Y8MutZR7HY",
   authDomain: "prj1-668de.firebaseapp.com",
@@ -45,20 +46,30 @@ class App extends Component {
   render() {
     const {user} = this.state;
     return (
-      <div className="App">
-        <p>{user ? `Hi, ${user.displayName}!` : 'Hi!'}</p>
+      <div className="row">
+       <div className="col-md-12">
+          <h1>Smart pantry</h1>
+          <h3>{user ? `Hi, ${user.displayName}!` : 'Hi!'}</h3>
         {user ? (
           <button onClick={this.logout.bind(this)}>
           Logout
         </button>
         ) : (
           // Render a helpful message otherwise
-          <img src="https://plaaant.com/img/facebook-login.png"  onClick={this.login.bind(this)} alt=""/>
+          <img src="https://plaaant.com/img/facebook-login.png" className="img-responsive"  onClick={this.login.bind(this)} alt=""/>
 
         )}
-      </div>
+       </div>
+      </div> 
     );
   }
 }
 
 export default App;
+App.propTypes = {
+    UserStore: PropTypes.shape({
+        userList: PropTypes.object.isRequired,
+        createUser: PropTypes.func.isRequired,
+        deleteUser: PropTypes.func.isRequired
+    })
+};

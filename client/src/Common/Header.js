@@ -47,6 +47,9 @@ class App extends React.Component {
                 <Link to="/DB">DB</Link>
               </li>
               <li>
+                <Link to="/Fire">Fire</Link>
+              </li>
+              <li>
                 <Link to='/'>{this.props.UserStore.userList?'Logout':'Login'}</Link>
               </li>
             </ul>

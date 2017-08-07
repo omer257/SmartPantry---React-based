@@ -5,12 +5,12 @@ class App extends Component {
   // Initialize state
   constructor(props) {
     super(props);
-    this.state = {item: [],fetching: false ,fetched: false};
+    this.state = {item: [],fetching: false ,fetched: false,loading: false};
   }
   
   uploadAction(ev) {
         let that = this;
-        that.setState({ fetching:true })
+        that.setState({ loading:true })
         var form = document
             .forms
             .namedItem("myForm");
@@ -19,10 +19,11 @@ class App extends Component {
         var oReq = new XMLHttpRequest();
         oReq.open("POST", "/upload", true);
         oReq.onload = function (oEvent) {
+          that.setState({ fetching:true })
             if (oReq.status === 200) {
               let data = JSON.parse(oReq.response);
               let parseAgain = JSON.parse(data)
-              that.setState({ item:parseAgain['0'].classes,fetched:true,fetching:false })
+              that.setState({ item:parseAgain['0'].classes,fetched:true,fetching:false,loading:false })
             } else {
                 console.log('Bad');
             }
@@ -32,14 +33,13 @@ class App extends Component {
     }
 
   render() {
-    const { item,fetching,fetched } = this.state;
+    const { item,fetching,fetched,loading } = this.state;
     let ajaxImage = null; 
     if(fetching){
-       ajaxImage = 'http://media.giphy.com/media/LPBYImbgzsKpG/giphy.gif';
+       ajaxImage = 'images/foodAjax.gif';
     }
-    else
-    {
-       ajaxImage = '';
+    if(loading){
+       ajaxImage = 'http://labour.ap.gov.in/phpmailer/progressbar.gif';
     }
     return (
       <div className="App">

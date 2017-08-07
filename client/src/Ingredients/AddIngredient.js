@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AutoComplete from './AutoComplete';
 import {Link} from 'react-router-dom'; //Calling link to bind with router
-
 import {inject, observer} from 'mobx-react';
 
 @inject('ingredientsStore')
@@ -27,19 +26,16 @@ export default class ingredientsList extends React.Component {
             .createingredientsStore(state.itemName, state.itemQuantity, state.itemType, state.itemDate);
     }
     render() {
-
         const { IngredientType,IngredientQuantity,validityType} = this.props.ingredientsStore;
 
         const validityTypeOptions = validityType
             .map((item) => (
                 <option key={item.id} value={item.id}>{item.name}</option>
             ));
-
        const options = IngredientType
             .map((item) => (
                 <option key={item.id} value={item.id}>{item.name}</option>
             ));
-
         const quantity = IngredientQuantity.map((item) => (
             <option key={item} value={item}>{item}</option>
         )); 
@@ -100,5 +96,9 @@ export default class ingredientsList extends React.Component {
 }
 
 ingredientsList.propTypes = {
-    //   ingredientsStore: PropTypes.func.isRequired,
+    ingredientsStore: PropTypes.shape({
+        IngredientType: PropTypes.object.isRequired,
+        IngredientQuantity: PropTypes.object.isRequired,
+        validityType: PropTypes.object.isRequired
+    })
 };

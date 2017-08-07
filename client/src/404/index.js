@@ -1,11 +1,18 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom'; //Calling link to bind with router
 
 export default class _404 extends Component {
 
   render() {
     return (
-      <div>
-       <img src="https://media.giphy.com/media/3nNgTJzYihAWc/giphy.gif" alt="sorry"/>
+      <div className="text-center">
+        <img
+          src="http://www.404notfound.fr/assets/images/pages/img/androiddev101.jpg"
+          className="img-responsive"
+          alt="sorry"/><br/>
+        <Link to='/'>
+          <h1>Go home... Shoo!</h1>
+        </Link>
       </div>
     );
   }

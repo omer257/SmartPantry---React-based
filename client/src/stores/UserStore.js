@@ -1,4 +1,4 @@
-import {observable, computed} from "mobx"
+import {observable} from "mobx"
 
 class userStoreScheme {
   @observable value;
@@ -31,6 +31,6 @@ class userStore {
   }
 
 }
-var store = window.store = new userStore();
+var store = new userStore();
 
 export default store;

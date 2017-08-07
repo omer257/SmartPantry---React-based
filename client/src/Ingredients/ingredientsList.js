@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import {inject, observer} from 'mobx-react';
 
 @inject('ingredientsStore')
@@ -74,40 +73,52 @@ export default class ingredientsList extends React.Component {
             </div>
         })
         return (
-            <div className="row">
-                <h1>Ingredient list</h1>
-                <br/>
-
-                <form className="form-inline">
-                    <div className="form-group">
+                <div>
+                    <div className="row">
+                    <div className="col-md-12">
+                    <h1>Ingredient list</h1>
+                    <br/>
+                    <form className="form-inline">
+                        <div className="form-group">
                         <label htmlFor="filter">Search by&nbsp;</label>
                         <input
-                            id="filter"
-                            className="form-control"
-                            type="text"
-                            value={filter}
-                            onChange={this
-                            .filter
-                            .bind(this)}/></div>
-                    <div className="form-group">
+                        id="filter"
+                        className="form-control"
+                        type="text"
+                        value={filter}
+                        onChange={this
+                        .filter
+                        .bind(this)}/></div>
+                        <div className="form-group">
                         <label htmlFor="itemType">Category:&nbsp;</label>
                         <select
-                            className="form-control"
-                            onChange={this
-                            .filterCategory
-                            .bind(this)}
-                            id="itemType">
-                            {options}
+                        className="form-control"
+                        onChange={this
+                        .filterCategory
+                        .bind(this)}
+                        id="itemType">
+                        {options}
                         </select>
+                        </div>
+                        <div className="form-group" onClick={clearInuse}> {filterUse}</div>
+                    </form>
+                    <br/>
                     </div>
-                    <div className="form-group" onClick={clearInuse}> {filterUse}</div>
-                </form>
-                <br/> {ingredientsList}
+                </div> 
+            <div className="row">
+                {ingredientsList}
             </div>
+                </div>
         );
     }
 }
 
 ingredientsList.propTypes = {
-    //   ingredientsStore: PropTypes.func.isRequired,
+    ingredientsStore: PropTypes.shape({
+        filter: PropTypes.object.isRequired,
+        filteredingredientsStores: PropTypes.object.isRequired,
+        clearInuse: PropTypes.object.isRequired,
+        IngredientType: PropTypes.object.isRequired,
+        filterUse: PropTypes.object.isRequired
+    })
 };

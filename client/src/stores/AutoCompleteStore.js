@@ -6,7 +6,7 @@ import fetch from 'isomorphic-fetch';
 
 // Main Store for credit card form
 // This store is passed as a prop to <App />
-const store = new class Store {
+class Store {
   @observable matches = [];
   @observable searchString = '';
   @observable selectedItem = {};
@@ -35,5 +35,6 @@ const store = new class Store {
   }
 };
  
+var store = new Store();
 
 export default store;
