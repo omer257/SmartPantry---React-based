@@ -5,7 +5,6 @@ const unirest = require('unirest');
 const watson = require('watson-developer-cloud');
 const fs = require('fs');
 const bodyParser = require('body-parser');
-const Clarifai = require('clarifai');
 const app = express();
 var multer = require('multer')
 
