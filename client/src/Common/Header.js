@@ -1,10 +1,26 @@
 import React from 'react';
 import {Link} from 'react-router-dom'; //Calling link to bind with router
+import firebase from 'firebase'
+import {inject, observer} from 'mobx-react';
 
+@inject('AuthStore','ingredientsStore')
+@observer
 class App extends React.Component {
-   
+   constructor(props) {
+    super(props);
+    this.state = {
+      user: ''
+    }
+  }
+  componentWillUpdate(nextProps, nextState){
+    if(nextState.user===""){
+      this.setState({user: this.props.AuthStore.authUser()})
+      this.props.ingredientsStore.getData();//Such a hack :(
+    }
+  }
   render() {
     // const { pathname } = this.props.location
+    this.props.AuthStore.authUser()
     return (
       <nav className="navbar navbar-default navbar-fixed-top">
         <div className="container">
@@ -26,9 +42,6 @@ class App extends React.Component {
           </div>
           <div id="navbar" className="navbar-collapse collapse">
             <ul className="nav navbar-nav">
-              {/*<li className="active">
-                <Link to='/'>Home</Link>
-              </li>*/}
               <li>
                 <Link to="/about">about</Link>
               </li>
@@ -42,10 +55,7 @@ class App extends React.Component {
                 <Link to="/RecipesList">RecipesList</Link>
               </li>
               <li>
-                <Link to="/RegLogin">RegLogin</Link>
-              </li>
-              <li>
-                <Link to="/test">test</Link>
+                <Link to="/RegLogin">{this.state.user?'Logout':'Login'}</Link>
               </li>
             </ul>
           </div>
@@ -54,5 +64,5 @@ class App extends React.Component {
     );
   }
 }
-// {this.props.Authstore.userList?'Logout':'Login'}
+// 
 export default App;

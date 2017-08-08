@@ -100,13 +100,16 @@ class App extends Component {
                             <li className="list-group-item">
                               <b>Instock:</b>{item.usedIngredientCount} {item
                                 .usedIngredients
-                                .map((item, index) => <div key={index}>{item.amount}{item.unit}
+                                .map((item, index) => <div key={index}>
+                                  {parseFloat(Math.round(item.amount * 100) / 100).toFixed(2)}&nbsp;{item.unit}
                                   - {item.name}</div>)}</li>
                             <li className="list-group-item">
                               <b>{item.missedIngredientCount}
                                 items missing</b><br/> {item
                                 .missedIngredients
-                                .map((item, index) => <div key={index}>{item.amount}{item.unit}
+                                .map((item, index) => <div key={index}>
+                                  {parseFloat(Math.round(item.amount * 100) / 100).toFixed(2)}
+                                  &nbsp;{item.unit}
                                   - {item.name}</div>)}
                             </li>
                           </ul>
