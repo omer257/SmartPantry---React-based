@@ -13,10 +13,10 @@ class App extends React.Component {
     }
   }
   componentWillUpdate(nextProps, nextState){
-    if(nextState.user===""){
-      this.setState({user: this.props.AuthStore.authUser()})
-      this.props.ingredientsStore.getData();//Such a hack :(
-    }
+    // if(nextState.user===""){
+    //   this.setState({user: this.props.AuthStore.authUser()})
+    //   this.props.ingredientsStore.getData();//Such a hack :
+    // }
   }
   render() {
     // const { pathname } = this.props.location
@@ -55,7 +55,10 @@ class App extends React.Component {
                 <Link to="/RecipesList">RecipesList</Link>
               </li>
               <li>
-                <Link to="/RegLogin">{this.state.user?'Logout':'Login'}</Link>
+                <Link to="/RegLogin">RegLogin</Link>
+              </li>
+              <li>
+                <Link to="/test">{this.state.user?'Logout':'Login'}</Link>
               </li>
             </ul>
           </div>
