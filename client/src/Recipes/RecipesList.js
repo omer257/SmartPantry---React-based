@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {inject, observer} from 'mobx-react';
 import {Link} from 'react-router-dom'; //Calling link to bind with router
 import PropTypes from 'prop-types';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'; // ES6
 
 @inject('ingredientsStore')
 @observer
@@ -44,12 +45,12 @@ class App extends Component {
   }
 
   render() {
-    const {recipes, ingredients, recipesCount, fetching} = this.state;
+    const {recipes, recipesCount, fetching} = this.state;
     return (
       <div>
         {fetching
           ? (
-            <div>
+            <div style={{overflow: 'hidden'}}>
               <h1 className="h1Animted">Fetching recepies!</h1>
               <div id="cooking">
                 <div className="bubble"></div>
@@ -84,8 +85,12 @@ class App extends Component {
                   {recipes.length
                     ? (
                       <div>
-
-                        {recipes.map((item, index) => <div className="card col-sm-3" key={index}>
+<ReactCSSTransitionGroup
+          transitionName="example"
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={300}>
+          
+               {recipes.map((item, index) => <div className="card col-sm-3" key={index}>
                           <img className="card-img-top img-responsive" src={item.image} alt={item.title}/>
                           <div className="card-block">
                             <h4 className="card-title">{item.title}</h4>
@@ -110,6 +115,8 @@ class App extends Component {
               <a href="#" className="card-link">Another link</a>
               </div>*/}
                         </div>)}
+        </ReactCSSTransitionGroup>
+                        
                       </div>
                     )
                     : (

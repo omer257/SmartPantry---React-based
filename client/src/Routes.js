@@ -7,27 +7,25 @@ import ingredientsList from './Ingredients/ingredientsList';
 import AddIngredient from './Ingredients/AddIngredient';
 import About from './About/';
 import RecipesList from './Recipes/RecipesList';
-import DB from './DB';
-import Fire from './Fire';
-
-
+import RegLogin from './RegLogin';
+import test from './test';
 
 import {Switch, Route} from 'react-router-dom';
 
 const Routes = () => (
     <div>
-        <Header/>
         <div className="container">
+            <Route name="Header" component={Header}/>
             <Switch>
             <Route name="home" exact path='/' component={App}/>
             <Route name="About" exact path='/About' component={About}/>
             <Route name="ingredientsList" exact path='/ingredientsList' component={ingredientsList}/>
             <Route name="Watson" exact path='/Watson' component={Watson}/>
             <Route name="RecipesList" exact path='/RecipesList' component={RecipesList}/>
-            <Route name="DB" exact path='/DB' component={DB}/>
-            <Route name="Fire" exact path='/Fire' component={Fire}/>
+            <Route name="RegLogin" exact path='/RegLogin' component={RegLogin}/>
             <Route name="AddIngredient" exact path='/AddIngredient' component={AddIngredient}/>
             <Route path="/AddIngredient/:name" component={AddIngredient}/>
+            <Route path="/test" component={test}/>
             <Route path="*" component={_404} />
             </Switch>
         </div>

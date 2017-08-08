@@ -12,19 +12,20 @@ export default class App extends Component {
     return (
       <div className="row">
         <div className="col-md-12">
-          <h1>About us</h1>
-          <h2>Lorem Ipsum is simply dummy text
-          </h2>
+          <h1>About us.. or actually why?</h1>
+          <h2>So why we made smart pantry?</h2>
           <p>
-            of the printing and typesetting industry. Lorem Ipsum has been the industry's
-            standard dummy text ever since the 1500s, when an unknown printer took a galley
-            of type and scrambled it to make a type specimen book. It has survived not only
-            five centuries, but also the leap into electronic typesetting, remaining
-            essentially unchanged. It was popularised in the 1960s with the release of
-            Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
-            publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-          </p>
+           Well... i love to cook and also travel around the world :) <br/>
+           But i allways forget what i have at home (My super yummi peanut butter sauce from thailand,<br />
+           Or some amazing spice i got as a gift from the states..)<br />
+           So.. I decided to create this Smartpantry app to sort all my cooking skills and yours!<br />
 
+           Technologies:<br />
+           React,mobx,FireBase,NodeJs,Watson API,food recepie API
+
+          </p>
+          <img className="circle" src="https://ak8.picdn.net/shutterstock/videos/7135981/thumb/1.jpg?i10c=img.resize(height:160)" alt=""/>
+          <img className="circle" src="http://cdn1.feedyourneedtoread.com/app/uploads/2015/03/In-The-Kitchen-copy-e1425937021371.jpg" alt=""/>
           <h3>The team</h3>
           <img className="img-responsive" src={rooster} alt="rooster"/>
           <span>Current pathname: {location.pathname}</span>

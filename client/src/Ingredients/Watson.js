@@ -5,12 +5,11 @@ class App extends Component {
   // Initialize state
   constructor(props) {
     super(props);
-    this.state = {item: [],fetching: false ,fetched: false,loading: false};
+    this.state = {item: [],fetching: false ,fetched: false };
   }
   
   uploadAction(ev) {
-        let that = this;
-        that.setState({ loading:true })
+        let that = this; 
         var form = document
             .forms
             .namedItem("myForm");
@@ -23,7 +22,7 @@ class App extends Component {
             if (oReq.status === 200) {
               let data = JSON.parse(oReq.response);
               let parseAgain = JSON.parse(data)
-              that.setState({ item:parseAgain['0'].classes,fetched:true,fetching:false,loading:false })
+              that.setState({ item:parseAgain['0'].classes,fetched:true,fetching:false })
             } else {
                 console.log('Bad');
             }
@@ -33,13 +32,10 @@ class App extends Component {
     }
 
   render() {
-    const { item,fetching,fetched,loading } = this.state;
+    const { item,fetching,fetched } = this.state;
     let ajaxImage = null; 
     if(fetching){
        ajaxImage = 'images/foodAjax.gif';
-    }
-    if(loading){
-       ajaxImage = 'http://labour.ap.gov.in/phpmailer/progressbar.gif';
     }
     return (
       <div className="App">
@@ -49,7 +45,9 @@ class App extends Component {
              <h1>One of those?</h1>
           {item.map((item,index)=>
           <Link to={"/AddIngredient/"+item.class}  className="btn btn-default btn-block" key={index}>{item.class} -{item.score}</Link>)}
-           <Link to="/AddIngredient/"  className="btn btn-danger btn-block">Couldnt get it... whoops :(</Link>
+          <hr/>
+          <Link to="/AddIngredient/"  className="btn btn-warning btn-block">Couldnt get it... whoops :(</Link>
+          <Link to="/Watson/"  className="btn btn-info btn-block">Try another image</Link>
            </div>
         ) : (
           // Render a helpful message otherwise

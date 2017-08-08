@@ -6,7 +6,8 @@ const watson = require('watson-developer-cloud');
 const fs = require('fs');
 const bodyParser = require('body-parser');
 const app = express();
-var multer = require('multer')
+var multer = require('multer');
+
 
 var storage = multer.diskStorage({
   destination: function (req, file, callback) {
@@ -77,29 +78,7 @@ app.get('/api/food/:count/:ingredients', (req, res) => {
       res.json(result.body);
     });
 });
-
-// Watson api after image exist
-app.get('/api/watson', (req, res) => {
-  var visual_recognition = watson.visual_recognition({api_key: 'd79067c7cb9a927a0e6232a140c25ee649192980', version: 'v3', version_date: '2016-05-20'});
-  var sFileName = path.join(__dirname, 'resources/soya.png');
-
-  var params = {
-    images_file: fs.createReadStream(sFileName),
-    threshold: 0.8,
-    // classifier_ids:['Food'],
-  };
-
-  visual_recognition.classify(params, function (err, results) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log(results.images[0].classifiers);
-      res.json(JSON.stringify(results.images[0].classifiers, null, 2));
-    }
-  });
-
-});
-
+  
 // The "catchall" handler: for any request that doesn't match one above, send
 // back React's index.html file.
 app.get('*', (req, res) => {

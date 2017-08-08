@@ -1,5 +1,9 @@
 import {observable, computed} from "mobx"
+import firebase from 'firebase'
+import {fbRef,fbApp} from '../FirebaseConfig'; 
 
+
+    
 class ingredientsStoreItem {
   @observable value;
   @observable id;
@@ -8,12 +12,12 @@ class ingredientsStoreItem {
   @observable quantity;
   @observable Inuse;
 
-  constructor(itemName, itemQuantity, itemType, itemDate) {
+  constructor(itemName, itemQuantity, itemType, itemDate, itemId) {
     this.value = itemName;
     this.date = itemDate;
     this.quantity = itemQuantity || 1;
     this.type = itemType || 1;
-    this.id = Date.now();
+    this.id = itemId;
     this.Inuse = true;
   }
 }
@@ -82,70 +86,94 @@ class ingredientsStore {
   @observable IngredientQuantity = IngredientQuantity
   @observable IngredientType = IngredientType
   @observable validityType = validityType
-  @observable ingredientsStores = []
+  @observable ingredientsList = []
+  @observable ingredientsFilteredList = []
   @observable filter = ""
   @observable filterCatagory = ""
-  @observable filterUse = "Show in use"
+  @observable filterUseText = "Show Unactive"
   @computed get filteredingredientsStores() {
     var matchFilter = new RegExp(this.filter, "i")
     var matchfilterCatagory = new RegExp(this.filterCatagory, "i")
     return this
-      .ingredientsStores
+      .ingredientsList
       .filter(ingredientsStore => !this.filter || matchFilter.test(ingredientsStore.value))
       .filter(ingredientsStore => !this.filterCatagory || matchfilterCatagory.test(ingredientsStore.type))
   }
 
+  getData() { 
+
+const itemsRef = fbApp.database().ref('users/'+firebase.auth().currentUser.uid+'/ingredients');
+    itemsRef.on('value', (snapshot) => {
+      let items = snapshot.val();
+      let newState = [];
+      for (let item in items) {
+        this
+      .ingredientsList
+      .push(new ingredientsStoreItem(items[item].value, items[item].quantity, items[item].type, items[item].date, item));
+     }
+    });
+  }
   createingredientsStore(itemName, itemQuantity, itemType, itemDate) {
-    this
-      .ingredientsStores
-      .push(new ingredientsStoreItem(itemName, itemQuantity, itemType, itemDate));
+    const itemsRef = fbApp.database().ref('users/'+firebase.auth().currentUser.uid+'/ingredients');
+    const item = {
+      quantity: itemQuantity,
+      type: itemType,
+      inuse: true,
+      date: itemDate,
+      value: itemName
+    }
+    itemsRef.push(item);
+    //  this.ingredientsList.push(new ingredientsStoreItem(itemName, itemQuantity, itemType, itemDate));
   }
 
   deleteingredientsStore(value) {
-    if (this.ingredientsStores.indexOf(value) > -1) {
-      this
-        .ingredientsStores
-        .splice(this.ingredientsStores.indexOf(value), 1);
-    }
+    const itemRef = fbApp.database().ref(`/users/${firebase.auth().currentUser.uid}/ingredients/${value}`);
+    itemRef.remove();
+    this.getData();
+    // if (this.ingredientsList.indexOf(value) > -1) {
+    //   this
+    //     .ingredientsList
+    //     .splice(this.ingredientsList.indexOf(value), 1);
+    // }
   }
 
   upgradeingredientsStore(value, value2) {
-    if (this.ingredientsStores.indexOf(value) > -1) {
-      let isInuse = this.ingredientsStores[
+    if (this.ingredientsList.indexOf(value) > -1) {
+      let isInuse = this.ingredientsList[
         this
-          .ingredientsStores
+          .ingredientsList
           .indexOf(value)
       ].Inuse;
-      this.ingredientsStores[
+      this.ingredientsList[
         this
-          .ingredientsStores
+          .ingredientsList
           .indexOf(value)
       ].Inuse = !isInuse;
     }
   }
 
   toggleInuse(value) {
-    if (this.ingredientsStores.indexOf(value) > -1) {
-      let isInuse = this.ingredientsStores[
+    if (this.ingredientsList.indexOf(value) > -1) {
+      let isInuse = this.ingredientsList[
         this
-          .ingredientsStores
+          .ingredientsList
           .indexOf(value)
       ].Inuse;
-      this.ingredientsStores[
+      this.ingredientsList[
         this
-          .ingredientsStores
+          .ingredientsList
           .indexOf(value)
       ].Inuse = !isInuse;
     }
   }
 
   clearInuse = () => {
-    const inInuseingredientsStores = this
-      .ingredientsStores
+    const inUseIngredientsList = this
+      .ingredientsList
       .filter(ingredientsStore => !ingredientsStore.Inuse)
     this
-      .ingredientsStores
-      .replace(inInuseingredientsStores);
+      .ingredientsList
+      .replace(inUseIngredientsList);
   }
 }
 var store = new ingredientsStore();

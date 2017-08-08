@@ -1,10 +1,10 @@
 import ingredientsStore from './ingredientsStore'
 import AutoCompleteStore from './AutoCompleteStore'
-import UserStore from './UserStore'
+import AuthStore from './AuthStore'
 
 const stores = {
     ingredientsStore,
-    UserStore,
-    AutoCompleteStore
+    AutoCompleteStore,
+    AuthStore
 }
 export default stores;

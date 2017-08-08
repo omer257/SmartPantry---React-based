@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {inject, observer} from 'mobx-react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'; // ES6
 
 @inject('ingredientsStore')
 @observer
-export default class ingredientsList extends React.Component {
+export default class ingredientsList extends React.Component { 
 
     deleteingredientsStore(ingredientsStoreItem) {
         this
@@ -31,8 +32,8 @@ export default class ingredientsList extends React.Component {
         this.props.ingredientsStore.filterCatagory = e.target.value;
     }
     render() {
-        const {filter, filteredingredientsStores, clearInuse, IngredientType, filterUse} = this.props.ingredientsStore;
-
+        const {filter, filteredingredientsStores, clearInuse, IngredientType, filterUseText} = this.props.ingredientsStore;
+      
         const options = IngredientType.map((item) => (
             <option key={item.id} value={item.id}>{item.name}</option>
         ));
@@ -55,7 +56,7 @@ export default class ingredientsList extends React.Component {
                             className="glyphicon glyphicon-trash"
                             onClick={this
                             .deleteingredientsStore
-                            .bind(this, ingredientsStoreItem)}></span>
+                            .bind(this, ingredientsStoreItem.id)}></span>
                     </div>
                     <small>Amount :{ingredientsStoreItem.quantity}</small><br/>
                     <small>Category:{IngredientType[ingredientsStoreItem.type].name}</small><br/>
@@ -73,52 +74,51 @@ export default class ingredientsList extends React.Component {
             </div>
         })
         return (
-                <div>
-                    <div className="row">
+            <div>
+                <div className="row">
                     <div className="col-md-12">
-                    <h1>Ingredient list</h1>
-                    <br/>
-                    <form className="form-inline">
-                        <div className="form-group">
-                        <label htmlFor="filter">Search by&nbsp;</label>
-                        <input
-                        id="filter"
-                        className="form-control"
-                        type="text"
-                        value={filter}
-                        onChange={this
-                        .filter
-                        .bind(this)}/></div>
-                        <div className="form-group">
-                        <label htmlFor="itemType">Category:&nbsp;</label>
-                        <select
-                        className="form-control"
-                        onChange={this
-                        .filterCategory
-                        .bind(this)}
-                        id="itemType">
-                        {options}
-                        </select>
-                        </div>
-                        <div className="form-group" onClick={clearInuse}> {filterUse}</div>
-                    </form>
-                    <br/>
+                        <h1>Ingredient list</h1>
+                        <br/>
+                        <form className="form-inline">
+                            <div className="form-group">
+                                <label htmlFor="filter">Search by&nbsp;</label>
+                                <input
+                                    id="filter"
+                                    className="form-control"
+                                    type="text"
+                                    value={filter}
+                                    onChange={this
+                                    .filter
+                                    .bind(this)}/></div>
+                            <div className="form-group">
+                                <label htmlFor="itemType">Category:&nbsp;</label>
+                                <select
+                                    className="form-control"
+                                    onChange={this
+                                    .filterCategory
+                                    .bind(this)}
+                                    id="itemType">
+                                    {options}
+                                </select>
+                            </div>
+                            <div className="form-group" onClick={clearInuse}>&nbsp;{filterUseText}</div>
+                        </form>
+                        <br/>
                     </div>
-                </div> 
-            <div className="row">
-                {ingredientsList}
-            </div>
                 </div>
+                <div className="row">
+                    <ReactCSSTransitionGroup
+                        transitionName="example"
+                        transitionEnterTimeout={500}
+                        transitionLeaveTimeout={300}>
+                        {ingredientsList}
+                    </ReactCSSTransitionGroup>
+                </div>
+            </div>
         );
     }
 }
 
 ingredientsList.propTypes = {
-    ingredientsStore: PropTypes.shape({
-        filter: PropTypes.object.isRequired,
-        filteredingredientsStores: PropTypes.object.isRequired,
-        clearInuse: PropTypes.object.isRequired,
-        IngredientType: PropTypes.object.isRequired,
-        filterUse: PropTypes.object.isRequired
-    })
+    ingredientsStore: PropTypes.shape({filter: PropTypes.object.isRequired, filteredingredientsStores: PropTypes.object.isRequired, clearInuse: PropTypes.object.isRequired, IngredientType: PropTypes.object.isRequired, filterUseText: PropTypes.object.isRequired})
 };

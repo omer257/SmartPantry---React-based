@@ -1,12 +1,10 @@
 import React from 'react';
 import {Link} from 'react-router-dom'; //Calling link to bind with router
-import {inject, observer} from 'mobx-react';
 
-@inject('UserStore')
-@observer
 class App extends React.Component {
    
   render() {
+    // const { pathname } = this.props.location
     return (
       <nav className="navbar navbar-default navbar-fixed-top">
         <div className="container">
@@ -28,9 +26,9 @@ class App extends React.Component {
           </div>
           <div id="navbar" className="navbar-collapse collapse">
             <ul className="nav navbar-nav">
-              <li className="active">
+              {/*<li className="active">
                 <Link to='/'>Home</Link>
-              </li>
+              </li>*/}
               <li>
                 <Link to="/about">about</Link>
               </li>
@@ -44,13 +42,10 @@ class App extends React.Component {
                 <Link to="/RecipesList">RecipesList</Link>
               </li>
               <li>
-                <Link to="/DB">DB</Link>
+                <Link to="/RegLogin">RegLogin</Link>
               </li>
               <li>
-                <Link to="/Fire">Fire</Link>
-              </li>
-              <li>
-                <Link to='/'>{this.props.UserStore.userList?'Logout':'Login'}</Link>
+                <Link to="/test">test</Link>
               </li>
             </ul>
           </div>
@@ -59,5 +54,5 @@ class App extends React.Component {
     );
   }
 }
-
+// {this.props.Authstore.userList?'Logout':'Login'}
 export default App;

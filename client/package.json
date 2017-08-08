@@ -19,6 +19,7 @@
     "react-facebook-login-component": "^0.8.0",
     "react-router": "^4.1.2",
     "react-scripts": "1.0.10",
+    "reactfire": "^1.0.0",
     "underscore": "^1.8.3"
   },
   "scripts": {

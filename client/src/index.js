@@ -16,7 +16,7 @@ const Providerstores = {
     routing: routingStore,
     ingredientsStore:stores.ingredientsStore,
     store:stores.AutoCompleteStore,
-    UserStore:stores.UserStore
+    AuthStore:stores.AuthStore
     // ...other stores
 };
 
@@ -26,6 +26,6 @@ const history = syncHistoryWithStore(browserHistory, routingStore);
 ReactDOM.render(
 <Provider {...Providerstores}>
     <Router history={history}>
-        <Routes/>
+        <Routes />
     </Router>
 </Provider>, document.getElementById('root'));
