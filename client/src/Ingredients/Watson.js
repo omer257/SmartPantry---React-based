@@ -38,22 +38,24 @@ class App extends Component {
        ajaxImage = 'images/foodAjax.gif';
     }
     return (
-      <div className="App">
-        {/* Render the passwords if we have them */}
-        {fetched ? (
+      <section className="bg-primary text-center">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-8 col-md-offset-2">
+                            <h2 className="section-heading">Upload image</h2>
+                             {fetched ? (
           <div> 
              <h1>One of those?</h1>
           {item.map((item,index)=>
           <Link to={"/AddIngredient/"+item.class}  className="btn btn-default btn-block" key={index}>{item.class} -{item.score}</Link>)}
-          <hr/>
-          <Link to="/AddIngredient/"  className="btn btn-warning btn-block">Couldnt get it... whoops :(</Link>
+         <br/> <hr/><br/>
+          <Link to="/AddIngredient/"  className="btn btn-danger btn-block">Couldnt get it... whoops :(</Link>
           <Link to="/Watson/"  className="btn btn-info btn-block">Try another image</Link>
            </div>
         ) : (
           // Render a helpful message otherwise
           
           <div>
-                <h1>Upload image</h1>
                 <form onSubmit={this
                     .uploadAction
                     .bind(this)}
@@ -71,7 +73,10 @@ class App extends Component {
                 <img src={ajaxImage} alt=""/>
             </div>
         )}
-      </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
     );
   }
 }

@@ -2,6 +2,7 @@
 import firebase from 'firebase';
 import { observable } from 'mobx';
 import {fbApp} from '../FirebaseConfig';
+import ingredientsStore from './ingredientsStore';
 
 class authstore {
     constructor(fbApp) {
@@ -13,6 +14,9 @@ class authstore {
 
         this.unwatchAuth = firebase.auth(this.fbApp).onAuthStateChanged(user => {
             this.auth.authUser = user;
+            if(user!==null){
+                ingredientsStore.getData();
+            } 
         });
     }
     

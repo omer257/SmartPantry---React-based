@@ -5,7 +5,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'; // ES6
 
 @inject('ingredientsStore')
 @observer
-export default class ingredientsList extends React.Component { 
+export default class ingredientsList extends React.Component {
 
     deleteingredientsStore(ingredientsStoreItem) {
         this
@@ -31,14 +31,34 @@ export default class ingredientsList extends React.Component {
     filterCategory(e) {
         this.props.ingredientsStore.filterCatagory = e.target.value;
     }
+
+    getSelection(filterType, str) {
+        let item = this
+            .props
+            .ingredientsStore[filterType]
+            .filter((obj) => {
+                return obj.id == str
+            });
+        if (item[0] !== null) {
+            return item[0].name;
+
+        }
+    }
     render() {
-        const {filter, filteredingredientsStores, clearInuse, IngredientType, filterUseText} = this.props.ingredientsStore;
-      
+        const {
+            filter,
+            filteredingredientsStores,
+            clearInuse,
+            IngredientType,
+            filterUseText,
+            validityType
+        } = this.props.ingredientsStore;
+
         const options = IngredientType.map((item) => (
             <option key={item.id} value={item.id}>{item.name}</option>
         ));
         let ingredientsList = filteredingredientsStores.map((ingredientsStoreItem, index) => {
-            return <div className="col-sm-3" key={index}>
+            return <div className="col-sm-3 col-xs-6" key={index}>
                 <div className="well">
                     <div
                         style={{
@@ -58,9 +78,10 @@ export default class ingredientsList extends React.Component {
                             .deleteingredientsStore
                             .bind(this, ingredientsStoreItem.id)}></span>
                     </div>
+
                     <small>Amount :{ingredientsStoreItem.quantity}</small><br/>
-                    <small>Category:{IngredientType[ingredientsStoreItem.type].name}</small><br/>
-                    <small>Valid until: ({ingredientsStoreItem.date})</small><br/>
+                    <small>Category:{this.getSelection('IngredientType', ingredientsStoreItem.type)}</small><br/>
+                    <small>Valid until: ({this.getSelection('validityType', ingredientsStoreItem.date)})</small><br/>
                     <small>Use item:
                         <input
                             type="checkbox"
@@ -74,47 +95,51 @@ export default class ingredientsList extends React.Component {
             </div>
         })
         return (
-            <div>
-                <div className="row">
-                    <div className="col-md-12">
-                        <h1>Ingredient list</h1>
-                        <br/>
-                        <form className="form-inline">
-                            <div className="form-group">
-                                <label htmlFor="filter">Search by&nbsp;</label>
-                                <input
-                                    id="filter"
-                                    className="form-control"
-                                    type="text"
-                                    value={filter}
-                                    onChange={this
-                                    .filter
-                                    .bind(this)}/></div>
-                            <div className="form-group">
-                                <label htmlFor="itemType">Category:&nbsp;</label>
-                                <select
-                                    className="form-control"
-                                    onChange={this
-                                    .filterCategory
-                                    .bind(this)}
-                                    id="itemType">
-                                    {options}
-                                </select>
-                            </div>
-                            <div className="form-group" onClick={clearInuse}>&nbsp;{filterUseText}</div>
-                        </form>
-                        <br/>
+            <section className="bg-primary text-center">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-8 col-md-offset-2">
+                            <h2 className="section-heading">Ingredient list</h2>
+                            <form className="form-inline">
+                                <div className="form-group">
+                                    <label htmlFor="filter">Search by&nbsp;</label>
+                                    <input
+                                        id="filter"
+                                        className="form-control"
+                                        type="text"
+                                        value={filter}
+                                        onChange={this
+                                        .filter
+                                        .bind(this)}/></div>
+                                <div className="form-group">
+                                    <label htmlFor="itemType">&nbsp;&nbsp;Category:&nbsp;</label>
+                                    <select
+                                        className="form-control"
+                                        onChange={this
+                                        .filterCategory
+                                        .bind(this)}
+                                        id="itemType">
+                                        {options}
+                                    </select>
+                                </div>
+                                <div className="form-group" onClick={clearInuse}>&nbsp;{filterUseText}</div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-                <div className="row">
-                    <ReactCSSTransitionGroup
-                        transitionName="example"
-                        transitionEnterTimeout={500}
-                        transitionLeaveTimeout={300}>
-                        {ingredientsList}
-                    </ReactCSSTransitionGroup>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-12"><br/><br/>
+                            <ReactCSSTransitionGroup
+                                transitionName="example"
+                                transitionEnterTimeout={500}
+                                transitionLeaveTimeout={300}>
+                                {ingredientsList}
+                            </ReactCSSTransitionGroup>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </section>
         );
     }
 }

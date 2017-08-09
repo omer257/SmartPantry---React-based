@@ -10,18 +10,15 @@ import './App.css';
 
 const browserHistory = createBrowserHistory();
 const routingStore = new RouterStore();
-
+const history = syncHistoryWithStore(browserHistory, routingStore);
 const Providerstores = {
-    // Key can be whatever you want
     routing: routingStore,
     ingredientsStore:stores.ingredientsStore,
     store:stores.AutoCompleteStore,
     AuthStore:stores.AuthStore
-    // ...other stores
 };
 
 
-const history = syncHistoryWithStore(browserHistory, routingStore);
 
 ReactDOM.render(
 <Provider {...Providerstores}>

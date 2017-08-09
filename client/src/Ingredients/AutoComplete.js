@@ -189,7 +189,7 @@ class AutoComplete extends React.Component {
   render() {
     return (
           <div className="form-input">
-            <input
+            <input required
               type="text"
               name={this.props.name}
               className="form-control"

@@ -1,9 +1,7 @@
 import {observable, computed} from "mobx"
 import firebase from 'firebase'
-import {fbRef,fbApp} from '../FirebaseConfig'; 
+import {fbApp} from '../FirebaseConfig';
 
-
-    
 class ingredientsStoreItem {
   @observable value;
   @observable id;
@@ -25,7 +23,7 @@ class ingredientsStoreItem {
 let IngredientType = [
   {
     id: '',
-    name: 'All'
+    name: 'Please select'
   }, {
     id: 1,
     name: 'Fresh fruit/vegetable'
@@ -55,9 +53,14 @@ let IngredientType = [
 
 let validityType = [
   {
+    id: '',
+    name: 'Please select'
+  },
+  {
     id: 1,
     name: '1 day'
-  }, {
+  },
+   {
     id: 3,
     name: '3 day'
   }, {
@@ -73,6 +76,7 @@ let validityType = [
 ];
 
 let IngredientQuantity = [
+  'Please select',
   1,
   2,
   3,
@@ -100,21 +104,24 @@ class ingredientsStore {
       .filter(ingredientsStore => !this.filterCatagory || matchfilterCatagory.test(ingredientsStore.type))
   }
 
-  getData() { 
-
-const itemsRef = fbApp.database().ref('users/'+firebase.auth().currentUser.uid+'/ingredients');
+  getData() {
+    const itemsRef = fbApp
+      .database()
+      .ref('users/' + firebase.auth().currentUser.uid + '/ingredients');
     itemsRef.on('value', (snapshot) => {
       let items = snapshot.val();
-      let newState = [];
+      this.ingredientsList =[];
       for (let item in items) {
         this
-      .ingredientsList
-      .push(new ingredientsStoreItem(items[item].value, items[item].quantity, items[item].type, items[item].date, item));
-     }
+          .ingredientsList
+          .push(new ingredientsStoreItem(items[item].value, items[item].quantity, items[item].type, items[item].date, item));
+      }
     });
   }
   createingredientsStore(itemName, itemQuantity, itemType, itemDate) {
-    const itemsRef = fbApp.database().ref('users/'+firebase.auth().currentUser.uid+'/ingredients');
+    const itemsRef = fbApp
+      .database()
+      .ref('users/' + firebase.auth().currentUser.uid + '/ingredients');
     const item = {
       quantity: itemQuantity,
       type: itemType,
@@ -123,18 +130,18 @@ const itemsRef = fbApp.database().ref('users/'+firebase.auth().currentUser.uid+'
       value: itemName
     }
     itemsRef.push(item);
-    //  this.ingredientsList.push(new ingredientsStoreItem(itemName, itemQuantity, itemType, itemDate));
+    //  this.ingredientsList.push(new ingredientsStoreItem(itemName, itemQuantity,
+    // itemType, itemDate));
   }
 
   deleteingredientsStore(value) {
-    const itemRef = fbApp.database().ref(`/users/${firebase.auth().currentUser.uid}/ingredients/${value}`);
+    const itemRef = fbApp
+      .database()
+      .ref(`/users/${firebase.auth().currentUser.uid}/ingredients/${value}`);
     itemRef.remove();
     this.getData();
-    // if (this.ingredientsList.indexOf(value) > -1) {
-    //   this
-    //     .ingredientsList
-    //     .splice(this.ingredientsList.indexOf(value), 1);
-    // }
+    // if (this.ingredientsList.indexOf(value) > -1) {   this     .ingredientsList
+    //   .splice(this.ingredientsList.indexOf(value), 1); }
   }
 
   upgradeingredientsStore(value, value2) {
