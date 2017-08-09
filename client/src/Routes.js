@@ -11,7 +11,6 @@ import RegLogin from './RegLogin';
 import {Link} from 'react-router-dom'; //Calling link to bind with router
 import firebase from 'firebase'
 import {Switch, Route, Redirect, withRouter} from 'react-router-dom';
- 
 
 const PrivateRoute = ({
   component: Component,
@@ -35,9 +34,7 @@ const Protected = () => <h3>Protected</h3>
 
 const Routes = () => (
   <div>
-    <div>
-      <Header/><br/><br/>
-      {/*<ul>
+    <Header/><br/><br/> {/*<ul>
         <li>
           <Link to="/public">Public Page</Link>
         </li>
@@ -46,15 +43,18 @@ const Routes = () => (
         </li>
       </ul>
       <AuthButton/>*/}
-      <Route name="home" exact path='/' component={App}/>
-      <Route name="About" exact path='/About' component={About}/>
-      <Route path="/public" component={Public}/>
-      <Route path="/RegLogin" component={RegLogin}/>
-      <PrivateRoute path="/ingredientsList" component={ingredientsList}/>
-      <PrivateRoute path="/Watson" component={Watson}/>
-      <PrivateRoute path="/RecipesList" component={RecipesList}/>
-      <PrivateRoute path="/AddIngredient" component={AddIngredient}/>
-    </div>
+    <Route name="home" exact path='/' component={App}/>
+    <Route name="About" exact path='/About' component={About}/>
+    <Route path="/public" component={Public}/>
+    <Route path="/RegLogin" component={RegLogin}/>
+    <PrivateRoute path="/ingredientsList" component={ingredientsList}/>
+    <PrivateRoute path="/Watson" component={Watson}/>
+    <PrivateRoute path="/RecipesList" component={RecipesList}/>
+    <Switch>
+      <Route exact name="AddIngredient" path="/AddIngredient" component={AddIngredient}/>
+      <Route path="/AddIngredient/:name" component={AddIngredient}/>
+      {/*<Route path="*" component={_404}/>*/}
+    </Switch>
   </div>
 )
 

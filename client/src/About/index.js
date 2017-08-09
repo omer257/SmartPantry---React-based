@@ -17,12 +17,15 @@ export default class App extends Component {
               <p>
                 Tired of planning your meals? Want to know what you have at your pantry And do
                 it in a cool way?<br />
-                With this app you can do the following:<br/>
+                With this app you can do the following:<br/><br/>
+
+                <ul>
+                  <li>Keep track of your pantry</li>
+                  <li>Add new items using Image detection API</li>
+                  <li>Get custom recepis based on your needs</li>
+                  <li>Sync actions between accounts on all devices</li>
+                  </ul>
               </p>
-                  <div>Keep track of your pantry</div>
-                  <div>Add new items using camera</div>
-                  <div>Keep track of your pantry</div>
-                  <div>Keep track of your pantry</div>
               <a href="#download" className="btn btn-outline btn-xl page-scroll">Start Now for Free!</a>
             </div>
             <div className="col-md-4">
@@ -30,6 +33,16 @@ export default class App extends Component {
               <img className="circle" src={rooster} alt="rooster"/>
             </div>
           </div>
+
+          <div className="row">
+            <div className="col-md-12"><br/><br/><br/>
+              <p>
+                <b>Technologies used in this project:</b><br/>
+                React js, Firebase, Mobx architecure, Node js/express
+              </p>
+            </div>
+          </div>
+
         </div>
       </section>
     );

@@ -14,6 +14,17 @@ class App extends Component {
             <div style={{
                 height: '100%'
             }}>
+
+             <section className="cta">
+                    <div className="cta-content">
+                        <div className="container">
+                            <h2>Stop looking.<br/>Start cooking!</h2>
+                            <h3 style={{color:'white'}}>Introducing Smart pantry</h3>
+                            <Link to="/RegLogin" className="btn btn-outline btn-xl page-scroll">Let's Get Started!</Link>
+                        </div>
+                    </div>
+                    <div className="overlay"></div>
+                </section>
                 <header>
                     <div className="container">
                         <div className="row">
@@ -43,27 +54,7 @@ class App extends Component {
                     </div>
                 </header>
 
-                <section id="download" className="download bg-primary text-center">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-md-8 col-md-offset-2">
-                                <h2 className="section-heading">Discover what all the buzz is about!</h2>
-                                <p>Our app is available on all devices! No need to download!</p>
-                                Follow this link - goo.gl/8Hz1Hz
-                                <br/><br/>
-                                <img
-                                    src="https://meridiangrindhouse.files.wordpress.com/2011/01/barcode.png"
-                                    style={{
-                                    width: '200px'
-                                }}
-                                    alt=""/> {/*<div className="badges">
-                        <a className="badge-link" href="#"><img src="img/google-play-badge.svg" alt="" /></a>
-                        <a className="badge-link" href="#"><img src="img/app-store-badge.svg" alt="" /></a>
-                    </div>*/}
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                
 
                 <section id="features" className="features">
                     <div className="container">
@@ -131,14 +122,26 @@ class App extends Component {
                     </div>
                 </section>
 
-                <section className="cta">
-                    <div className="cta-content">
-                        <div className="container">
-                            <h2>Stop looking.<br/>Start cooking!</h2>
-                            <Link to="/RegLogin" className="btn btn-outline btn-xl page-scroll">Let's Get Started!</Link>
+               <section id="download" className="download bg-primary text-center">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-md-8 col-md-offset-2">
+                                <h2 className="section-heading">Discover what all the buzz is about!</h2>
+                                <p>Our app is available on all devices! No need to download!</p>
+                                Follow this link - goo.gl/8Hz1Hz
+                                <br/><br/>
+                                <img
+                                    src="https://meridiangrindhouse.files.wordpress.com/2011/01/barcode.png"
+                                    style={{
+                                    width: '200px'
+                                }}
+                                    alt=""/> {/*<div className="badges">
+                        <a className="badge-link" href="#"><img src="img/google-play-badge.svg" alt="" /></a>
+                        <a className="badge-link" href="#"><img src="img/app-store-badge.svg" alt="" /></a>
+                    </div>*/}
+                            </div>
                         </div>
                     </div>
-                    <div className="overlay"></div>
                 </section>
 
                 <section id="contact" className="contact bg-primary">

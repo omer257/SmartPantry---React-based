@@ -9,7 +9,9 @@ class App extends Component {
   }
   
   uploadAction(ev) {
+
         let that = this; 
+        that.setState({ fetching:true })
         var form = document
             .forms
             .namedItem("myForm");
@@ -18,7 +20,6 @@ class App extends Component {
         var oReq = new XMLHttpRequest();
         oReq.open("POST", "/upload", true);
         oReq.onload = function (oEvent) {
-          that.setState({ fetching:true })
             if (oReq.status === 200) {
               let data = JSON.parse(oReq.response);
               let parseAgain = JSON.parse(data)
@@ -35,48 +36,48 @@ class App extends Component {
     const { item,fetching,fetched } = this.state;
     let ajaxImage = null; 
     if(fetching){
-       ajaxImage = 'images/foodAjax.gif';
+       ajaxImage = 'https://media.giphy.com/media/BUXh4bHNSoLXW/giphy.gif';
     }
     return (
-      <section className="bg-primary text-center">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-8 col-md-offset-2">
-                            <h2 className="section-heading">Upload image</h2>
-                             {fetched ? (
-          <div> 
-             <h1>One of those?</h1>
-          {item.map((item,index)=>
-          <Link to={"/AddIngredient/"+item.class}  className="btn btn-default btn-block" key={index}>{item.class} -{item.score}</Link>)}
-         <br/> <hr/><br/>
-          <Link to="/AddIngredient/"  className="btn btn-danger btn-block">Couldnt get it... whoops :(</Link>
-          <Link to="/Watson/"  className="btn btn-info btn-block">Try another image</Link>
-           </div>
-        ) : (
-          // Render a helpful message otherwise
-          
-          <div>
-                <form onSubmit={this
-                    .uploadAction
-                    .bind(this)}
-                id='myForm'
-                name='myForm'
-                action='upload'
-                method='post'
-                encType="multipart/form-data">
-                    <div className="form-group">
-                        <label htmlFor="email">Upload image</label>
-                         <input type="file" id="myFile" name="myFile" required/>
-                    </div>
-                    <button type="submit" className="btn btn-default">Submit</button>
-                </form> 
-                <img src={ajaxImage} alt=""/>
-            </div>
-        )}
+        <section className="bg-primary text-center">
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-8 col-md-offset-2">
+                        <h2 className="section-heading">Upload image</h2>
+                            {fetched ? (
+                        <div> 
+                            <h1>One of those?</h1>
+                        {item.map((item,index)=>
+                        <Link to={"/AddIngredient/"+item.class}  className="btn btn-default btn-block" key={index}>{item.class} -{item.score}</Link>)}
+                        <br/> <hr/><br/>
+                        <Link to="/AddIngredient/"  className="btn btn-danger btn-block">Couldnt get it... whoops :(</Link>
+                        <Link to="/Watson/"  className="btn btn-info btn-block">Try another image</Link>
                         </div>
+                        ) : (
+                        // Render a helpful message otherwise
+
+                        <div>
+                        <form onSubmit={this
+                        .uploadAction
+                        .bind(this)}
+                        id='myForm'
+                        name='myForm'
+                        action='upload'
+                        method='post'
+                        encType="multipart/form-data">
+                        <div className="form-group">
+                        <label htmlFor="email">Upload image</label>
+                        <input type="file" id="myFile" name="myFile" required/>
+                        </div>
+                        <button type="submit" className="btn btn-default">Submit</button>
+                        </form> 
+                        <img src={{ajaxImage}} className="img-responsive" alt=""/>
+                        </div>
+                        )}
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
     );
   }
 }

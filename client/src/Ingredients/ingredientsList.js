@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {inject, observer} from 'mobx-react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'; // ES6
+import {Link} from 'react-router-dom'; //Calling link to bind with router
 
 @inject('ingredientsStore')
 @observer
@@ -130,12 +131,16 @@ export default class ingredientsList extends React.Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12"><br/><br/>
-                            <ReactCSSTransitionGroup
+                        {ingredientsList.length?
+                        (<ReactCSSTransitionGroup
                                 transitionName="example"
                                 transitionEnterTimeout={500}
                                 transitionLeaveTimeout={300}>
                                 {ingredientsList}
-                            </ReactCSSTransitionGroup>
+                            </ReactCSSTransitionGroup>)
+                        :
+                        (<div>Your list is empty, <Link to="/AddIngredient">Click here to add more</Link></div>)}
+                            
                         </div>
                     </div>
                 </div>

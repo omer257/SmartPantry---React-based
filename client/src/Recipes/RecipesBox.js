@@ -23,7 +23,7 @@ class App extends Component {
                   {parseFloat(Math.round(item.amount * 100) / 100).toFixed(2)}&nbsp;{item.unit}
                   - {item.name}</div>)}</li>
             <li className="list-group-item">
-              <b>{item.missedIngredientCount} 
+              <b>{item.missedIngredientCount}&nbsp; 
                 items missing</b><br/> {item
                 .missedIngredients
                 .map((item, index) => <div key={index}>

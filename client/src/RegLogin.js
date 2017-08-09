@@ -149,7 +149,7 @@ class RegisterOrLogin extends Component {
                             </div>
                         </div>
                     </div>
-                    <p>You must log in to view the page at {from.pathname}</p>
+                    {/*<p>You must log in to view the page at {from.pathname}</p>*/}
                     {/*<button onClick={this.login2}>Log in</button>*/}
                 </div>
             </section>
