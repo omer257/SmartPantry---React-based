@@ -12,10 +12,10 @@ class App extends React.Component {
     }
   }
   componentWillUpdate(nextProps, nextState) {
-    if(nextState.user===""){
-    this.setState({user:this.props.AuthStore.authUser()})
-    this.props.ingredientsStore.getData();//Such a hack : 
-    }
+    // if(nextState.user===""){
+    // this.setState({user:this.props.AuthStore.authUser()})
+    // this.props.ingredientsStore.getData();//Such a hack : 
+    // }
   }
   render() {
     // const { pathname } = this.props.location

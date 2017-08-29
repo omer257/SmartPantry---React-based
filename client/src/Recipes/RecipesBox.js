@@ -42,4 +42,7 @@ class App extends Component {
   }
 }
 
+App.propTypes = {
+ item: PropTypes.object.isRequired
+};
 export default App;

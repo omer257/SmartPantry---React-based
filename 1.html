@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <script>
+        let demoarr = [40, 1, 25, 5, 10];
+        // function solve(arr) {
+        //     let sum =0;
+        //     let finalArr = [];
+        //     while (arr.length>0) {
+        //         let max = Math.max.apply( Math, demoarr );
+        //         let min = Math.min.apply( Math, demoarr );
+        //         sum += max*min;
+        //         console.log(max,min);
+        //         arr.splice(arr.indexOf(max),1);
+        //         finalArr.push(max,min)
+        //         console.log(arr,finalArr);
+        //         if(finalArr.indexOf(min)){
+        //            // arr.splice(arr.indexOf(min),1);
+        //         }
+        //     }
+        //     console.log(finalArr);
+        // }
+
+
+        function solve(arr) {
+            let finalarr = [];
+            let sum = 0;
+            arr = arr.sort((a, b) => {return b - a})
+
+            while (arr.length>0) {
+                finalarr.push(arr[0]);
+                if(arr.length===1){
+                    return finalarr;
+                }
+                finalarr.push(arr[arr.length-1]);
+                arr.splice(0,1);
+                arr.splice(arr.length-1,1);
+            }
+            return finalarr;
+        }
+        console.log(solve(demoarr));
+    </script>
+
+</body>
+
+</html>

@@ -14,6 +14,7 @@ class authstore {
 
         this.unwatchAuth = firebase.auth(this.fbApp).onAuthStateChanged(user => {
             this.auth.authUser = user;
+            console.log(user);
             if(user!==null){
                 ingredientsStore.getData();
             } 

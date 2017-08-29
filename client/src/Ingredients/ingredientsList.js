@@ -60,40 +60,45 @@ export default class ingredientsList extends React.Component {
         ));
         let ingredientsList = filteredingredientsStores.map((ingredientsStoreItem, index) => {
             return <div className="col-sm-3 col-xs-6" key={index}>
-                <div className="well">
-                    <div
-                        style={{
-                        float: 'left',
-                        width: '90%'
-                    }}>
-                        <b>{ingredientsStoreItem.value}</b>
-                    </div>
-                    <div
-                        style={{
-                        float: 'right',
-                        width: '10%'
-                    }}>
-                        <span
-                            className="glyphicon glyphicon-trash"
-                            onClick={this
-                            .deleteingredientsStore
-                            .bind(this, ingredientsStoreItem.id)}></span>
-                    </div>
-
-                    <small>Amount :{ingredientsStoreItem.quantity}</small><br/>
-                    <small>Category:{this.getSelection('IngredientType', ingredientsStoreItem.type)}</small><br/>
-                    <small>Valid until: ({this.getSelection('validityType', ingredientsStoreItem.date)})</small><br/>
-                    <small>Use item:
-                        <input
+                        <div className="well">
+                            <div
+                                style={{
+                                float: 'left',
+                                width: '90%'
+                            }}>
+                                <b>{ingredientsStoreItem.value}</b>
+                            </div>
+                            <div
+                                style={{
+                                float: 'right',
+                                width: '10%'
+                            }}>
+                                <span
+                                    className="glyphicon glyphicon-trash"
+                                    onClick={this
+                                    .deleteingredientsStore
+                                    .bind(this, ingredientsStoreItem.id)}></span>
+                            </div> 
+                            {ingredientsStoreItem.date
+                            ? (
+                            <h1>111</h1>
+                            )
+                            : (
+                            <h1>222s</h1>
+                            )}
+                            <small>Amount :{ingredientsStoreItem.quantity}</small><br/>
+                            <small>Category:{this.getSelection('IngredientType', ingredientsStoreItem.type)}</small><br/>
+                            <small>Valid until: ({this.getSelection('validityType', ingredientsStoreItem.date)})</small><br/>
+                            <small>Use item:
+                            <input
                             type="checkbox"
                             value={ingredientsStoreItem.Inuse}
                             checked={ingredientsStoreItem.Inuse}
                             onChange={this
                             .toggleInuse
                             .bind(this, ingredientsStoreItem)}/></small><br/>
-
-                </div>
-            </div>
+                            </div>
+                            </div>
         })
         return (
             <section className="bg-primary text-center">
